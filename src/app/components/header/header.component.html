@@ -1,0 +1,40 @@
+<header class="p-3 mb-3 border-bottom shadow-sm bg-light">
+    <div class="container">
+      <div class="d-flex flex-wrap align-items-center justify-content-between">
+        <a routerLink="" class="d-flex align-items-center mb-2 mb-lg-0 text-decoration-none text-body">
+          <!-- <img src="../../../../assets/RepTrack_final_transparent.png" alt="Logo" width="70" height="70" class="me-2"> -->
+        </a>
+  
+        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+          <li><a routerLink="activity" class="nav-link px-2 link-body-emphasis fs-5">Evenementen</a></li>
+          <li><a routerLink="about" class="nav-link px-2 link-body-emphasis fs-5">About</a></li>
+        </ul>
+  
+        <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3 position-relative">
+          <input type="search" class="form-control border-0 shadow-sm rounded-pill ps-4" placeholder="Zoeken..." aria-label="Search">
+          <span class="position-absolute top-50 end-0 translate-middle-y me-3">
+            <i class="bi bi-search"></i>
+          </span>
+        </form>
+  
+        <!-- <div *ngIf="!(loggedInUser$ | async); else loggedIn" class="d-flex align-items-center">
+          <a routerLink="/login" class="btn btn-outline-danger me-2">Login</a>
+          <a routerLink="/register" class="btn btn-success">Registreren</a>
+        </div>
+  
+        <ng-template #loggedIn>
+          <div class="dropdown text-end">
+            <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+              <img src="https://github.com/mdo.png" alt="Profile" width="32" height="32" class="rounded-circle">
+            </a>
+            <ul class="dropdown-menu text-small">
+              <li><a routerLink="users" class="dropdown-item">Profiel</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" (click)="logout()">Uitloggen</a></li>
+            </ul>
+          </div>
+        </ng-template> -->
+      </div>
+    </div>
+  </header>
+  
