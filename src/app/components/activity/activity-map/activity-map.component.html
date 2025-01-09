@@ -1,1 +1,12 @@
-<p>activity-map works!</p>
+<div class="map-container">    
+    <div id="map" class="map"></div>
+    <div class="search-bar">
+        <input
+          type="text"
+          placeholder="Type hier uw locatie"
+          [(ngModel)]="searchQuery"
+          (keyup.enter)="searchLocation()"
+        />
+        <button (click)="searchLocation()">Zoek naar uw locatie</button>
+      </div>
+  </div>
