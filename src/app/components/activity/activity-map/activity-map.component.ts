@@ -2,13 +2,17 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import * as L from 'leaflet';
 import { OpenStreetMapProvider } from 'leaflet-geosearch';
+import { ActivityService } from '../activity.service';
+import {Activity} from "../../../models/activity.interface"
+import { Subscription } from 'rxjs';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-activity-map',
   templateUrl: './activity-map.component.html',
   styleUrls: ['./activity-map.component.css'],
   standalone: true,
-  imports: [FormsModule]
+  imports: [FormsModule, HttpClientModule]
 })
 export class ActivityMapComponent {
   searchQuery: string = ''; 
@@ -16,15 +20,31 @@ export class ActivityMapComponent {
   private provider = new OpenStreetMapProvider(); 
 
   private events = [
-    { name: 'Event 1', lat: 52.3676, lng: 4.9041, description: 'Amsterdam Event' },
-    { name: 'Event 2', lat: 51.4416, lng: 5.4697, description: 'Eindhoven Event' },
-    { name: 'Event 3', lat: 53.2194, lng: 6.5665, description: 'Groningen Event' }
+    { title: 'Event 1', lat: 52.3676, lng: 4.9041, description: 'Amsterdam Event' },
+    { title: 'Event 2', lat: 51.4416, lng: 5.4697, description: 'Eindhoven Event' },
+    { title: 'Event 3', lat: 53.2194, lng: 6.5665, description: 'Groningen Event' }
   ];
 
+  private activities: Activity[] | undefined;
+  sub: Subscription | undefined;
+
+  constructor(
+    private activityService: ActivityService
+  ){}
 
   ngOnInit(): void {
     this.initMap();
-    this.addMarkers();
+  
+    this.sub = this.activityService.getActivitiesAsync().subscribe({
+      next: (activities) => {
+        this.activities = activities;
+        console.log('Activities in ngOnInit:', this.activities);
+        this.addMarkers();
+      },
+      error: (err) => {
+        console.error('Error while fetching activities:', err);
+      }
+    });
   }
 
   private initMap(): void {
@@ -36,10 +56,13 @@ export class ActivityMapComponent {
   }
 
   private addMarkers(): void {
-    this.events.forEach(event => {
-      const marker = L.marker([event.lat, event.lng])
+    if (!this.activities) {
+      return;
+    }
+    this.activities.forEach(activity => {
+      const marker = L.marker([activity.latitude, activity.longitude])
         .addTo(this.map)
-        .bindPopup(`<b>${event.name}</b><br>${event.description}`);
+        .bindPopup(`<b>${activity.title}</b><br>${activity.description}`);
     });
   }
 
