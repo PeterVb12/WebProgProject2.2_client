@@ -1,1 +1,107 @@
-<p>activity-create works!</p>
+<div class="container-fluid px-5 my-5">
+    <div class="row justify-content-center">
+      <div class="col-xl-10">
+        <div class="card border-0 rounded-3 shadow-lg overflow-hidden">
+          <div class="card-body p-0">
+            <div class="row g-0">
+              <div class="col-sm-6 d-none d-sm-block bg-image"></div>
+  
+              <div class="col-sm-6 p-4">
+                <div class="text-center">
+                  <h2 class="fw-light">Maak hier uw eigen evenement aan</h2>
+                  <p class="mb-4 text-muted">Vul de details van uw evenement in.</p>
+                </div>
+
+                <form (ngSubmit)="createEvent()" #eventForm="ngForm">
+                  <div class="form-floating mb-3">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="name"
+                      required
+                      placeholder="Naam"
+                      [(ngModel)]="event.name"
+                      name="name"
+                    />
+                    <label for="name">Naam</label>
+                  </div>
+  
+                  <div class="form-floating mb-3">
+                    <input
+                      type="file"
+                      class="form-control"
+                      id="photo"
+                      (change)="onFileSelected($event)"
+                    />
+                    <label for="photo">Foto</label>
+                  </div>
+  
+                  <div class="form-floating mb-3">
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="cost"
+                      placeholder="Mogelijke kosten"
+                      [(ngModel)]="event.cost"
+                      name="cost"
+                    />
+                    <label for="cost">Mogelijke kosten</label>
+                  </div>
+  
+                  <div class="form-floating mb-3">
+                    <textarea
+                      class="form-control"
+                      id="description"
+                      placeholder="Beschrijving"
+                      style="height: 7rem;"
+                      required
+                      [(ngModel)]="event.description"
+                      name="description"
+                    ></textarea>
+                    <label for="description">Beschrijving</label>
+                  </div>
+  
+                  <div class="form-floating mb-3">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="address"
+                      placeholder="Adres en postcode"
+                      required
+                      [(ngModel)]="event.address"
+                      name="address"
+                    />
+                    <label for="address">Adres en postcode</label>
+                  </div>
+  
+                  <div class="form-floating mb-3">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="organizer"
+                      placeholder="Organisator"
+                      required
+                      [(ngModel)]="event.organizer"
+                      name="organizer"
+                    />
+                    <label for="organizer">Organisator</label>
+                  </div>
+  
+                  <div class="d-grid">
+                    <button
+                      type="submit"
+                      class="btn btn-primary btn-lg"
+                      [disabled]="!eventForm.valid"
+                    >
+                      Maak evenement aan
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> 
+  

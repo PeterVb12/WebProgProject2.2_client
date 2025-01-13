@@ -1,0 +1,55 @@
+.create-event-container {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+  }
+
+  .form-group {
+    margin-bottom: 15px;
+  }
+
+  .form-control {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  .btn {
+    margin-top: 10px;
+  }
+
+  body {
+    background: #007bff;
+    background: linear-gradient(to right, #0062E6, #33AEFF);
+  }
+
+  .bg-image {
+    background-image: url('../../../../assets/oudeman.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  .form-control {
+    border-radius: 0.5rem;
+  }
+
+  .btn-primary {
+    background-color: #0062e6;
+    border: none;
+  }
+
+  .btn-primary:hover {
+    background-color: #0056d2;
+  }
+
+  .form-floating label {
+    padding-left: 1.5rem;
+  }
+
+  .form-floating textarea {
+    resize: none;
+  }
