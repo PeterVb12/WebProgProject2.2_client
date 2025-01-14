@@ -43,7 +43,7 @@ export class AuthService {
         return this.http
         .post<{results:IUserIdentity}>(
             `${environment.BackendApiUrl}/Account/login`,
-            { emailAddress: email, password: password },
+            { email: email, password: password },
             { headers: this.headers }
         )
         .pipe(
