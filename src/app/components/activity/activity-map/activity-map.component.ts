@@ -19,12 +19,6 @@ export class ActivityMapComponent {
   private map!: L.Map;
   private provider = new OpenStreetMapProvider(); 
 
-  private events = [
-    { title: 'Event 1', lat: 52.3676, lng: 4.9041, description: 'Amsterdam Event' },
-    { title: 'Event 2', lat: 51.4416, lng: 5.4697, description: 'Eindhoven Event' },
-    { title: 'Event 3', lat: 53.2194, lng: 6.5665, description: 'Groningen Event' }
-  ];
-
   private activities: Activity[] | undefined;
   sub: Subscription | undefined;
 
