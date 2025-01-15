@@ -10,6 +10,6 @@ export const routes: Routes = [] = [
     {path: 'frontpage', component: FrontpageComponent },
     {path: 'activity', component: ActivityMapComponent },
     {path: 'createactivity', component: ActivityCreateComponent},
-    {path: 'detailsactivity', component: ActivityDetailsComponent},
+    {path: 'detailsactivity/:id', component: ActivityDetailsComponent},
     {path: 'register', component: RegisterComponent}
 ];
