@@ -17,4 +17,8 @@ export class ActivityService {
         tap((activities) => console.log('Opgehaalde evenementen:', activities)) // Log de activiteiten
       );
   }
+
+  getActivityById(id: string): Observable<Activity> {
+    return this.http.get<Activity>(`${environment.BackendApiUrl}/Activity/${id}`);
+  }
 }

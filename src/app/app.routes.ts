@@ -11,6 +11,8 @@ export const routes: Routes = [
     {path: 'frontpage', component: FrontpageComponent },
     {path: 'activity', component: ActivityMapComponent },
     {path: 'createactivity', component: ActivityCreateComponent},
+    {path: 'detailsactivity/:id', component: ActivityDetailsComponent},
+    {path: 'register', component: RegisterComponent},
     {path: 'detailsactivity', component: ActivityDetailsComponent},
     {path: 'register', component: RegisterComponent},
     {path: 'login', component: LoginComponent },
