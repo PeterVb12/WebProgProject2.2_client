@@ -12,7 +12,7 @@ export interface IUserIdentity {
     birthdate: string;         
     emailAddress: string;
     age: number;
-    biography: string;
+    biography: string;  
     phoneNumber: string;
     hobbys: string[];
     role: UserRole
@@ -23,3 +23,17 @@ export enum UserRole {
     Organisation = 'Organisation',
     Foundation = 'Foundation'
 }
+
+export interface IUser extends IUserIdentity {
+    
+}
+
+export interface ICreateUser {
+    email: string;
+    password: string;
+    name: string;
+    birthdate: string;
+    biography: string;
+    phoneNumber: string;
+  }
+  

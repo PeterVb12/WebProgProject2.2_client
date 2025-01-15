@@ -1,142 +1,171 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, map, Observable, of, switchMap } from 'rxjs';
-import { IUserIdentity } from '../../models/user.interface';
+import { ICreateUser, IUserIdentity } from '../../models/user.interface';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment.development';
+import { jwtDecode } from 'jwt-decode';
 
 @Injectable({
-    providedIn: 'root',
-  })
+  providedIn: 'root',
+})
 export class AuthService {
-    public currentUser$ = new BehaviorSubject<IUserIdentity | undefined>(undefined);
-    private readonly CURRENT_USER = 'currentuser';
-    private readonly headers = new HttpHeaders({
-        'Content-Type': 'application/json',
-    });
+  public currentUser$ = new BehaviorSubject<IUserIdentity | undefined>(undefined);
+  private readonly CURRENT_USER = 'currentuser';
+  private readonly headers = new HttpHeaders({
+    'Content-Type': 'application/json',
+  });
 
-    constructor(
-        private http: HttpClient,
-        private router: Router,
-      ) {
-        this.getUserFromLocalStorage()
-          .pipe(
-            // switchMap is overbodig als we validateToken() niet gebruiken...
-            switchMap((user: IUserIdentity) => {
-              if (user) {
-                console.log('User found in local storage');
-                this.currentUser$.next(user);
-                //return this.validateToken(user);
-                return of(user);
-              } else {
-                console.log(`No current user found`);
-                return of(undefined);
-              }
+  constructor(
+    private http: HttpClient,
+    private router: Router
+  ) {
+    this.getUserFromLocalStorage()
+      .pipe(
+        switchMap((user: IUserIdentity | undefined) => {
+          if (user) {
+            console.log('User found in local storage');
+            this.currentUser$.next(user);
+            return of(user);
+          } else {
+            console.log(`No current user found`);
+            return of(undefined);
+          }
+        })
+      )
+      .subscribe(() => console.log('Startup auth done'));
+  }
+
+  login(email: string, password: string): Observable<IUserIdentity | undefined> {
+    console.log(`Login request to backend`);
+  
+    return this.http
+      .post<{ token: string }>(
+        `${environment.BackendApiUrl}/Account/login`,
+        { email, password },
+        { headers: this.headers }
+      )
+      .pipe(
+        map((response) => {
+          const token = response.token;
+          console.log('Token ontvangen:', token); // Debuglog
+          this.saveTokenToLocalStorage(token);
+  
+          // Decode token to extract userId
+          const decodedToken: any = jwtDecode(token);
+          console.log('Decoded token payload:', decodedToken); // Debuglog
+          const userId =
+            decodedToken[
+              'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'
+            ];
+          if (!userId) {
+            throw new Error('UserId is missing in the token payload.');
+          }
+          console.log('Decoded userId:', userId); // Debuglog
+  
+          return userId;
+        }),
+        switchMap((userId) =>
+          // Fetch user data from the backend using userId
+          this.http.get<IUserIdentity>(`${environment.BackendApiUrl}/User/${userId}`).pipe(
+            map((user) => {
+              console.log('User ontvangen van backend:', user); // Debuglog
+              this.currentUser$.next(user); // Store user as currentUser
+              console.log('currentUser$ updated:', this.currentUser$.value); // Debuglog
+              return user;
             })
           )
-          .subscribe(() => console.log('Startup auth done'));
-      }
-
-    login(email: string, password: string): Observable<IUserIdentity | undefined> {
-        console.log(`login at ${environment.BackendApiUrl}/Account/login`);
-    
-        return this.http
-        .post<{results:IUserIdentity}>(
-            `${environment.BackendApiUrl}/Account/login`,
-            { email: email, password: password },
-            { headers: this.headers }
-        )
-        .pipe(
-            map((response) => {
-            const user = response.results; 
-            this.saveUserToLocalStorage(user);
-            this.currentUser$.next(user);
-            return user;
-            }),
-            catchError((error: any) => {
-            console.log('error:', error);
-            console.log('error.message:', error.message);
-            console.log('error.error.message:', error.error.message);
-            return of(undefined);
-            })
-        );
-    }
-    
-    register(userData: IUserIdentity): Observable<IUserIdentity | undefined> {
-    console.log(`register at ${environment.BackendApiUrl}/Account/register`);
-    console.log(userData);
-    
-    return this.http
-        .post<IUserIdentity>(`${environment.BackendApiUrl}/Account/register`, userData, {
-        headers: this.headers,
+        ),
+        catchError((error: any) => {
+          console.error('Login failed. Full error object:', error);
+          return of(undefined);
         })
-        .pipe(
+      );
+  }
+  
+  
+  
+
+  register(userData: ICreateUser): Observable<IUserIdentity | undefined> {
+    console.log(`Registering user at ${environment.BackendApiUrl}/Account/register`);
+    console.log(userData);
+
+    return this.http
+      .post<IUserIdentity>(`${environment.BackendApiUrl}/Account/register`, userData, {
+        headers: this.headers,
+      })
+      .pipe(
         map((user) => {
-            //const user = new User(response);
-            console.dir(user);
-            return user;
+          console.log('Payload:', userData);
+          console.log('User registered successfully:', user);
+          const token = user.token; // Save only the token
+          this.saveTokenToLocalStorage(token!); // Save the token to local storage
+          this.currentUser$.next(user); // Update current user
+          return user;
         }),
         catchError((error: any) => {
-            console.log('error:', error);
-            console.log('error.message:', error.message);
-            console.log('error.error.message:', error.error.message);
-            return of(undefined);
+          console.error('Error during registration:', error);
+          return of(undefined);
         })
-        );
-    }
+      );
+  }
 
-    validateToken(userData: IUserIdentity): Observable<IUserIdentity | undefined> {
-        const url = `${environment.BackendApiUrl}/Account/profile`;
-        const httpOptions = {
-          headers: new HttpHeaders({
-            'Content-Type': 'application/json',
-            Authorization: 'Bearer ' + userData.token,
-          }),
-        };
-    
-        console.log(`validateToken at ${url}`);
-        return this.http.get<any>(url, httpOptions).pipe(
-          map((response) => {
-            console.log('token is valid');
-            return response;
-          }),
-          catchError((error: any) => {
-            console.log('Validate token Failed');
-            this.logout();
-            this.currentUser$.next(undefined);
-            return of(undefined);
-          })
-        );
-      }
-    
-      logout(): void {
-        this.router
-          .navigate(['/'])
-          .then((success) => {
-            // true when canDeactivate allows us to leave the page.
-            if (success) {
-              console.log('logout - removing local user info');
-              localStorage.removeItem(this.CURRENT_USER);
-              this.currentUser$.next(undefined);
-            } else {
-              console.log('navigate result:', success);
-            }
-          })
-          .catch((error) => console.log('not logged out!'));
-      }
-    
-      getUserFromLocalStorage(): Observable<IUserIdentity> {
-        const localUser = JSON.parse(localStorage.getItem(this.CURRENT_USER)!);
-        return of(localUser);
-      }
-    
-      private saveUserToLocalStorage(user: IUserIdentity): void {
-        localStorage.setItem(this.CURRENT_USER, JSON.stringify(user));
-      }
-    
-      userMayEdit(itemUserId: string): Observable<boolean> {
-        return this.currentUser$.pipe(
-          map((user: IUserIdentity | undefined) => (user ? user.id === itemUserId : false))
-        );
-      }
+  validateToken(userData: IUserIdentity): Observable<IUserIdentity | undefined> {
+    const url = `${environment.BackendApiUrl}/Account/profile`;
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + userData.token,
+      }),
+    };
+
+    console.log(`validateToken at ${url}`);
+    return this.http.get<any>(url, httpOptions).pipe(
+      map((response) => {
+        console.log('token is valid');
+        return response;
+      }),
+      catchError((error: any) => {
+        console.log('Validate token Failed');
+        this.logout();
+        this.currentUser$.next(undefined);
+        return of(undefined);
+      })
+    );
+  }
+
+  logout(): void {
+    this.router
+      .navigate(['/'])
+      .then((success) => {
+        if (success) {
+          console.log('logout - removing local user info');
+          localStorage.removeItem(this.CURRENT_USER);
+          this.currentUser$.next(undefined);
+        } else {
+          console.log('navigate result:', success);
+        }
+      })
+      .catch((error) => console.log('not logged out!'));
+  }
+
+  getUserFromLocalStorage(): Observable<IUserIdentity | undefined> {
+    const token = localStorage.getItem(this.CURRENT_USER); // Get only the token
+    if (token) {
+      // Optional: Create a user object with just the token
+      const user: IUserIdentity = { token } as IUserIdentity;
+      return of(user);
+    }
+    return of(undefined);
+  }
+
+  private saveTokenToLocalStorage(token: string): void {
+    localStorage.setItem(this.CURRENT_USER, token); // Save only the token
+  }
+
+  userMayEdit(itemUserId: string): Observable<boolean> {
+    return this.currentUser$.pipe(
+      map((user: IUserIdentity | undefined) => (user ? user.id === itemUserId : false))
+    );
+  }
 }

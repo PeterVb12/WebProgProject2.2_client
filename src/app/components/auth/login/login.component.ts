@@ -35,7 +35,7 @@ export class LoginComponent {
 
     this.subs = this.authService
       .getUserFromLocalStorage()
-      .subscribe((user: IUserIdentity) => {
+      .subscribe((user: IUserIdentity | undefined) => {
         if (user) {
           console.log('User already logged in > to dashboard');
           this.router.navigate(['/']);
@@ -56,9 +56,8 @@ export class LoginComponent {
       const password = this.loginForm.value.password;
       this.authService
         .login(email, password)
-        // .pipe(delay(1000))
-        .subscribe((user: any) => {
-          if (user) {
+        .subscribe((token: any) => {
+          if (token) {
             console.log('Logged in');
             this.router.navigate(['/']);
           }
