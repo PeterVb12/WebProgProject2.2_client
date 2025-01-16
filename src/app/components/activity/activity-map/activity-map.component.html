@@ -14,12 +14,18 @@
     style="flex: 1; box-sizing: border-box;"
   >
     <!-- Titel -->
-    <h2
-      class="text-center mb-4"
-      style="font-weight: bold; color: #3E7056;"
-    >
-      Filter op evenementen
-    </h2>
+    <div class="title-container d-flex align-items-center justify-content-between mb-4">
+      <h2 style="font-weight: bold; color: #3E7056;">Filter op evenementen</h2>
+      <button
+        class="btn btn-info btn-sm rounded-circle shadow"
+        (click)="showInfo()"
+        style="width: 2rem; height: 2rem; display: flex; align-items: center; justify-content: center; background-color: #a9564d; border-color: #a9564d;"
+      >
+        i
+      </button>
+    </div>
+
+    
     <!-- Knoppen -->
     <div class="filter-buttons d-flex flex-column gap-2">
       <button class="btn btn-light shadow">

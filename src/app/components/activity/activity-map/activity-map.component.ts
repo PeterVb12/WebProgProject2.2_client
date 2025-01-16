@@ -34,6 +34,7 @@ export class ActivityMapComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.initMap();
+    this.customizeLeafletDrawLabels();
     this.sub = this.activityService.getActivitiesAsync().subscribe({
       next: (activities: Activity[]) => {
         this.activities = activities;
@@ -44,6 +45,33 @@ export class ActivityMapComponent implements OnInit, OnDestroy {
       },
     });
   }
+
+  private customizeLeafletDrawLabels(): void {
+    
+    L.drawLocal.draw.toolbar.actions.title = 'Annuleer tekenen'; 
+    L.drawLocal.draw.toolbar.actions.text = 'Annuleren'; 
+    L.drawLocal.draw.toolbar.finish.title = 'Voltooi tekenen'; 
+    L.drawLocal.draw.toolbar.finish.text = 'Opslaan'; 
+    L.drawLocal.draw.toolbar.undo.title = 'Verwijder het laatste punt'; 
+    L.drawLocal.draw.toolbar.undo.text = 'Laatste punt verwijderen'; 
+    L.drawLocal.draw.toolbar.buttons.polyline = 'Teken een lijn'; 
+    L.drawLocal.draw.toolbar.buttons.polygon = 'Teken een veelhoek'; 
+    L.drawLocal.draw.toolbar.buttons.rectangle = 'Teken een rechthoek'; 
+    L.drawLocal.draw.toolbar.buttons.circle = 'Teken een cirkel'; 
+    L.drawLocal.draw.toolbar.buttons.marker = 'Plaats een marker'; 
+    L.drawLocal.draw.toolbar.buttons.circlemarker = 'Plaats een cirkelmarker'; 
+
+    
+    L.drawLocal.edit.toolbar.actions.save.title = 'Sla wijzigingen op'; 
+    L.drawLocal.edit.toolbar.actions.save.text = 'Opslaan'; 
+    L.drawLocal.edit.toolbar.actions.cancel.title = 'Annuleer wijzigingen'; 
+    L.drawLocal.edit.toolbar.actions.cancel.text = 'Annuleren'; 
+    L.drawLocal.edit.toolbar.buttons.edit = 'Bewerk de lagen'; 
+    L.drawLocal.edit.toolbar.buttons.remove = 'Verwijder de lagen'; 
+
+    L.drawLocal.edit.toolbar.actions.clearAll.text="verwijder alles" 
+  }
+
 
   private initMap(): void {
     this.map = L.map('map').setView([52.3676, 4.9041], 7);
@@ -107,6 +135,15 @@ export class ActivityMapComponent implements OnInit, OnDestroy {
       this.filterActivitiesByPolygon(bounds);
     }
   }
+
+  showInfo(): void {
+  alert(
+    'Welkom! Gebruik de kaart om evenementen te bekijken en te filteren:\n' +
+    '- Klik op een knop om een vorm te tekenen en filter evenementen in dat gebied.\n' +
+    '- Typ een locatie in de zoekbalk en druk op Enter of klik op "Zoek naar uw locatie" om de kaart te verplaatsen.\n' +
+    '- Gebruik de filters (Gezien, Nieuw, Ingeschreven) om specifieke evenementen te bekijken.'
+  );
+}
 
   private filterActivitiesByCircle(center: L.LatLng, radius: number): void {
     if (!this.activities) return;
@@ -181,6 +218,9 @@ export class ActivityMapComponent implements OnInit, OnDestroy {
       alert('An error occurred while searching for the location.');
     }
   }
+
+  
+
   
 
   ngOnDestroy(): void {
