@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../auth/auth.service';
 
 interface ParticipatingActivity {
   title: string;
@@ -22,7 +23,9 @@ export class ActivityListComponent implements OnInit {
   private readonly participationApi = 'https://localhost:7061/api/Participation';
   token: string | null = localStorage.getItem('currentuser');
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,
+              private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
     if (this.token) {
@@ -44,7 +47,8 @@ export class ActivityListComponent implements OnInit {
   }
 
   private loadParticipatingActivities(): void {
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
+    const token = this.authService.getTokenFromLocalStorage()
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
     this.http.get<ParticipatingActivity[]>(this.participationApi, { headers }).subscribe({
       next: (activities) => {
