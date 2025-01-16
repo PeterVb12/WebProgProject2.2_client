@@ -40,30 +40,13 @@ export class ActivityDetailsComponent implements OnInit {
     }
   }
 
-  participate(activityId: string): void {
-    if (!this.token) {
-      console.error('Token not found. Please log in.');
+  participate(eventId : string): void {
+    if (!eventId || !eventId) {
+      console.error('Event ID not found.');
       return;
     }
-  
-    // Decode the token and extract the user ID
-    const decodedToken = this.jwtService.decodeToken(this.token);
-    const userId = decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"];
-    if (!userId) {
-      console.error('Invalid token: User ID not found.');
-      return;
-    }
-  
-    const url = `${this.participationApi}/${activityId}`;
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
-  
-    // Prepare the payload
-    const participationData = {
-      userId, // Extracted from the token
-      activityId, // This is passed to the method
-    };
-  
-    this.http.post(url, participationData, { headers }).subscribe({
+
+    this.activityService.participate(eventId).subscribe({
       next: () => {
         console.log('Participation successful!');
       },
