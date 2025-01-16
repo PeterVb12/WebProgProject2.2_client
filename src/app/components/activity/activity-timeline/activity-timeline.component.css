@@ -1,0 +1,128 @@
+.timeline {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    overflow-x: scroll;
+    padding: 20px;
+    gap: 40px;
+    position: relative;
+  }
+  
+  .timeline::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #4caf50;  /* De kleur van de lijn */
+    transform: translateY(-50%);
+  }
+  
+  .timeline-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 10px;
+    flex-shrink: 0;
+    width: 250px; /* Vaste breedte voor elke card */
+    height: 200px; /* Vaste hoogte voor elke card */
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    box-sizing: border-box;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .timeline-item:nth-child(odd) {
+    margin-top: 300px;  /* Items met een oneven index staan boven de lijn */
+  }
+  
+  .timeline-item:nth-child(even) {
+    margin-bottom: 300px;  /* Items met een even index staan onder de lijn */
+  }
+  
+  .timeline-icon {
+    width: 20px;
+    height: 20px;
+    background-color: #4caf50;
+    border-radius: 50%;
+    position: absolute;
+    transform: translateY(-50%);
+  }
+
+  .timeline-item:nth-child(odd) .timeline-icon {
+    left: 125px;
+    bottom: 90%;
+  }
+  
+  .timeline-item:nth-child(even) .timeline-icon {
+    left: 125px;
+    top: 100%;
+  }
+  
+  .timeline-content {
+    text-align: center;
+    padding: 10px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .timeline-content h3 {
+    font-size: 1.2rem;
+    margin: 0;
+  }
+  
+  .timeline-content p {
+    font-size: 1rem;
+    color: #333;
+    margin: 10px 0;
+  }
+  
+  .timeline-date {
+    font-size: 0.9rem;
+    color: gray;
+    margin-top: 8px;
+  }
+  
+  .timeline::-webkit-scrollbar {
+    height: 8px;
+  }
+  
+  .timeline::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 5px;
+  }
+  
+  .timeline::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+  }
+
+  /* Lijn van het bolletje naar de tijdlijn */
+  .timeline-icon::after {
+    content: '';
+    position: absolute;
+    left: 50%;                  /* Plaatst de lijn in het midden van het bolletje */
+    width: 2px;                 /* De breedte van de lijn */
+    background-color: #4caf50;  /* De kleur van de lijn */
+    z-index: -1;                /* Zorgt ervoor dat de lijn onder de bol komt */
+    transform: translateX(-50%); /* Zorgt ervoor dat de lijn gecentreerd is boven het bolletje */
+  }
+  
+  /* Voor de bovenste cards (oneven items) */
+  .timeline-item:nth-child(even) .timeline-icon::after {
+    top: 100%;                  /* Zorgt ervoor dat de lijn naar de tijdlijn gaat vanaf de bovenste card */
+    height: 200%;               /* Zorgt ervoor dat de lijn naar de tijdlijn reikt */
+  }
+  
+  /* Voor de onderste cards (even items) */
+  .timeline-item:nth-child(odd) .timeline-icon::after {
+    bottom: 100%;               /* Zorgt ervoor dat de lijn naar de tijdlijn gaat vanaf de onderste card */
+    height: 200%;              /* Zorgt ervoor dat de lijn naar de bovenkant van de tijdlijn gaat */
+  }
+  

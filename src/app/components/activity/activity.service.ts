@@ -49,6 +49,16 @@ export class ActivityService {
       )
     );
   }
+
+  getParticipatingActivities(): Observable<Activity[]> {
+    const token = this.authService.getTokenFromLocalStorage();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http
+      .get<Activity[]>(`${environment.BackendApiUrl}/Participation`, { headers })
+      .pipe(
+        tap((activities) => console.log('Participating activities:', activities))
+      );
+  }
   
 }
     // console.log("evenement die aangemaakt wordt: " + activity)
