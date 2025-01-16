@@ -5,6 +5,7 @@ import { ActivityCreateComponent } from './components/activity/activity-create/a
 import { ActivityDetailsComponent } from './components/activity/activity-details/activity-details.component';
 import { RegisterComponent } from './components/auth/register/register.component';
 import { LoginComponent } from './components/auth/login/login.component';
+import { ActivityListComponent } from './components/activity/activity-list/activity-list.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/frontpage', pathMatch: 'full' },
@@ -16,6 +17,8 @@ export const routes: Routes = [
     {path: 'detailsactivity', component: ActivityDetailsComponent},
     {path: 'register', component: RegisterComponent},
     {path: 'login', component: LoginComponent },
+    { path: 'my-activities', component: ActivityListComponent }
+
     
 
 ];
