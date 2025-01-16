@@ -53,3 +53,75 @@
   .form-floating textarea {
     resize: none;
   }
+
+  /* Error Message Container */
+.error-container {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.error-message {
+  background-color: #f8d7da;
+  color: #842029;
+  border: 1px solid #f5c2c7;
+  padding: 15px;
+  border-radius: 5px;
+  max-width: 600px;
+  width: 100%;
+  text-align: center;
+  font-size: 14px;
+  position: relative;
+}
+
+.error-message .close-button {
+  background: transparent;
+  border: none;
+  font-size: 16px;
+  font-weight: bold;
+  color: #842029;
+  cursor: pointer;
+  position: absolute;
+  top: 5px;
+  right: 10px;
+}
+
+.error-message .close-button:hover {
+  color: #6a1b1b;
+}
+
+/* Success Message Container */
+.success-container {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.success-message {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+  padding: 15px;
+  border-radius: 5px;
+  max-width: 600px;
+  width: 100%;
+  text-align: center;
+  font-size: 14px;
+  position: relative;
+}
+
+.success-message .close-button {
+  background: transparent;
+  border: none;
+  font-size: 16px;
+  font-weight: bold;
+  color: #155724;
+  cursor: pointer;
+  position: absolute;
+  top: 5px;
+  right: 10px;
+}
+
+.success-message .close-button:hover {
+  color: #0c4021;
+}
