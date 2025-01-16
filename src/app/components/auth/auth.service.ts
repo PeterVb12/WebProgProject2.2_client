@@ -71,6 +71,7 @@ export class AuthService {
             map((user) => {
               console.log('User ontvangen van backend:', user); // Debuglog
               this.currentUser$.next(user); // Store user as currentUser
+              this.saveUserToLocalStorage(user); // Save the user in localStorage
               console.log('currentUser$ updated:', this.currentUser$.value); // Debuglog
               return user;
             })
@@ -82,6 +83,7 @@ export class AuthService {
         })
       );
   }
+  
   
   
   
@@ -160,8 +162,19 @@ export class AuthService {
   }
 
   private saveTokenToLocalStorage(token: string): void {
-    localStorage.setItem(this.CURRENT_USER, token); // Save only the token
+    console.log('Token opgeslagen:', token);
+    localStorage.setItem("tokenLocalStorage", token); // Save only the token
   }
+
+  getTokenFromLocalStorage(): string | null {
+    return localStorage.getItem("tokenLocalStorage");
+  }
+
+  private saveUserToLocalStorage(user: IUserIdentity): void {
+    // Sla de volledige gebruiker op in localStorage in plaats van alleen de token
+    localStorage.setItem(this.CURRENT_USER, JSON.stringify(user));
+  }
+  
 
   userMayEdit(itemUserId: string): Observable<boolean> {
     return this.currentUser$.pipe(
