@@ -1,29 +1,37 @@
 <div class="map-page-container d-flex" style="height: 100vh;">
   <!-- Kaartgedeelte -->
   <div class="map-container w-66 p-3" style="flex: 2; box-sizing: border-box;">
-    <div id="map" class="map" style="width: 100%; height: 100%; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);"></div>
+    <div
+      id="map"
+      class="map"
+      style="width: 100%; height: 100%; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);"
+    ></div>
   </div>
-  
-  <!-- Filter en invoerveld gedeelte -->
-  <div class="filter-container w-33 p-3 d-flex flex-column justify-content-start" style="flex: 1; box-sizing: border-box;">
-    <!-- Titel -->
 
-    <h2 class="text-center mb-4" style="font-weight: bold; color: #3E7056;">Filter op evenementen</h2>
+  <!-- Filter en invoerveld gedeelte -->
+  <div
+    class="filter-container w-33 p-3 d-flex flex-column justify-content-start"
+    style="flex: 1; box-sizing: border-box;"
+  >
+    <!-- Titel -->
+    <h2
+      class="text-center mb-4"
+      style="font-weight: bold; color: #3E7056;"
+    >
+      Filter op evenementen
+    </h2>
     <!-- Knoppen -->
     <div class="filter-buttons d-flex flex-column gap-2">
-      <button class="btn btn-light shadow" 
-      >
-      <!-- (click)="filterEvents('gezien')" -->
+      <button class="btn btn-light shadow">
+        <!-- (click)="filterEvents('gezien')" -->
         Gezien
       </button>
-      <button class="btn btn-light shadow" 
-      >
-      <!-- (click)="filterEvents('nieuw')" -->
+      <button class="btn btn-light shadow">
+        <!-- (click)="filterEvents('nieuw')" -->
         Nieuw
       </button>
-      <button class="btn btn-light shadow" 
-      >
-      <!-- (click)="filterEvents('ingeschreven')" -->
+      <button class="btn btn-light shadow">
+        <!-- (click)="filterEvents('ingeschreven')" -->
         Ingeschreven
       </button>
     </div>
@@ -47,6 +55,4 @@
       </button>
     </div>
   </div>
-
-
 </div>
