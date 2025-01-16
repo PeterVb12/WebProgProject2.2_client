@@ -50,42 +50,54 @@ export class ActivityService {
     );
   }
 
+   httpOptions = {
+    headers: new HttpHeaders({
+      'Accept': 'text/plain',  // Accepting plain text
+      'Content-Type': 'text/plain; charset=utf-8'  // Content-type is plain text
+    }),
+    responseType: 'text' as const,  // Set responseType to 'text'
+    observe: 'body'  // Ensure you are observing the body of the response
+  };
+
   participate(activityId: string): Observable<any> {
-    console.log("Gebruiker schrijft zich in voor evenement met ID:", activityId);
+    console.log("User is trying to participate in the event with ID:", activityId);
   
     return this.authService.currentUser$.pipe(
       map((user) => {
         const token = this.authService.getTokenFromLocalStorage();
-        console.log('Opgehaald token:', token);
+        console.log('Retrieved token:', token);
   
         if (!token) {
-          throw new Error('Gebruiker is niet ingelogd of er is geen token beschikbaar.');
+          throw new Error('User is not logged in or no token available.');
         }
   
-        // Headers aanmaken
-        const headers = new HttpHeaders({
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json', // Zorg ervoor dat Content-Type is ingesteld
-        });
-  
-        return { activityId, headers };
+        return { activityId, token };
       }),
-      switchMap(({ activityId, headers }) =>
-        this.http.post<any>(
-          `${environment.BackendApiUrl}/Participation/${activityId}`, 
-          null, // Geen body vereist
-          { headers } // Headers hier correct meegeven
+      switchMap(({ activityId, token }) =>
+        this.http.post(
+          `${environment.BackendApiUrl}/Participation/${activityId}`,
+          null,  // No body required
+          {
+            headers: new HttpHeaders({
+              'Authorization': `Bearer ${token}`,
+              'Accept': 'text/plain',  // We expect plain text
+              'Content-Type': 'application/json',  // This can stay as application/json for consistency
+            }),
+            observe: 'body',  // We observe the body response
+            responseType: 'text'  // Explicitly set the response type to text
+          }
         )
       ),
-      tap((response) =>
-        console.log('Deelname succesvol geregistreerd:', response)
-      ),
+      tap((response) => console.log('Successfully registered for the activity:', response)),
       catchError((error) => {
-        console.error('Fout bij inschrijving:', error);
-        return throwError(() => new Error('De inschrijving is mislukt.'));
+        console.error('Error during participation:', error);
+        return throwError(() => new Error('Participation failed.'));
       })
     );
   }
+  
+  
+  
   
   
   
