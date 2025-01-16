@@ -13,6 +13,11 @@
     class="filter-container w-33 p-3 d-flex flex-column justify-content-start"
     style="flex: 1; box-sizing: border-box;"
   >
+    <!-- Info Bar -->
+    <div *ngIf="showInfoAlert" class="info-alert">
+      {{ infoMessage }}
+    </div>
+
     <!-- Titel -->
     <div class="title-container d-flex align-items-center justify-content-between mb-4">
       <h2 style="font-weight: bold; color: #3E7056;">Filter op evenementen</h2>
@@ -25,19 +30,15 @@
       </button>
     </div>
 
-    
     <!-- Knoppen -->
     <div class="filter-buttons d-flex flex-column gap-2">
       <button class="btn btn-light shadow">
-        <!-- (click)="filterEvents('gezien')" -->
         Gezien
       </button>
       <button class="btn btn-light shadow">
-        <!-- (click)="filterEvents('nieuw')" -->
         Nieuw
       </button>
       <button class="btn btn-light shadow">
-        <!-- (click)="filterEvents('ingeschreven')" -->
         Ingeschreven
       </button>
     </div>

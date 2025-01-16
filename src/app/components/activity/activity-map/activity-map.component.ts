@@ -10,13 +10,14 @@ import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import inside from 'point-in-polygon';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-activity-map',
   templateUrl: './activity-map.component.html',
   styleUrls: ['./activity-map.component.css'],
   standalone: true,
-  imports: [FormsModule, HttpClientModule],
+  imports: [FormsModule, HttpClientModule, CommonModule],
 })
 export class ActivityMapComponent implements OnInit, OnDestroy {
   searchQuery: string = '';
@@ -43,6 +44,28 @@ export class ActivityMapComponent implements OnInit, OnDestroy {
         console.error('Error fetching activities:', err);
       },
     });
+
+    
+  }
+
+  showInfoAlert = false;
+  infoMessage = '';
+
+  // Existing code...
+
+  showInfo(): void {
+    this.infoMessage = `Welkom! Gebruik de kaart om evenementen te bekijken en te filteren:
+    - Klik op een knop om een vorm te tekenen en filter evenementen in dat gebied.
+    - Typ een locatie in de zoekbalk en druk op Enter of klik op "Zoek naar uw locatie" om de kaart te verplaatsen.
+    - Gebruik de filters (Gezien, Nieuw, Ingeschreven) om specifieke evenementen te bekijken.`;
+    
+    // Show the info alert bar
+    this.showInfoAlert = true;
+
+    // Optionally hide the info bar after 10 seconds
+    setTimeout(() => {
+      this.showInfoAlert = false;
+    }, 100000); // 10 seconds
   }
 
   private customizeLeafletDrawLabels(): void {
@@ -148,14 +171,7 @@ export class ActivityMapComponent implements OnInit, OnDestroy {
     }
   }
 
-  showInfo(): void {
-    alert(
-      'Welkom! Gebruik de kaart om evenementen te bekijken en te filteren:\n' +
-        '- Klik op een knop om een vorm te tekenen en filter evenementen in dat gebied.\n' +
-        '- Typ een locatie in de zoekbalk en druk op Enter of klik op "Zoek naar uw locatie" om de kaart te verplaatsen.\n' +
-        '- Gebruik de filters (Gezien, Nieuw, Ingeschreven) om specifieke evenementen te bekijken.'
-    );
-  }
+  
 
   private filterActivitiesByCircle(center: L.LatLng, radius: number): void {
     if (!this.activities) return;
@@ -230,6 +246,12 @@ export class ActivityMapComponent implements OnInit, OnDestroy {
       alert('An error occurred while searching for the location.');
     }
   }
+
+
+
+  // Existing code...
+
+  
 
   ngOnDestroy(): void {
     this.sub?.unsubscribe();
