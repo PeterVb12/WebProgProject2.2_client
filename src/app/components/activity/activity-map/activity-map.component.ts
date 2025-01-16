@@ -11,7 +11,6 @@ import { Router } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import inside from 'point-in-polygon';
 
-
 @Component({
   selector: 'app-activity-map',
   templateUrl: './activity-map.component.html',
@@ -47,31 +46,28 @@ export class ActivityMapComponent implements OnInit, OnDestroy {
   }
 
   private customizeLeafletDrawLabels(): void {
-    
-    L.drawLocal.draw.toolbar.actions.title = 'Annuleer tekenen'; 
-    L.drawLocal.draw.toolbar.actions.text = 'Annuleren'; 
-    L.drawLocal.draw.toolbar.finish.title = 'Voltooi tekenen'; 
-    L.drawLocal.draw.toolbar.finish.text = 'Opslaan'; 
-    L.drawLocal.draw.toolbar.undo.title = 'Verwijder het laatste punt'; 
-    L.drawLocal.draw.toolbar.undo.text = 'Laatste punt verwijderen'; 
-    L.drawLocal.draw.toolbar.buttons.polyline = 'Teken een lijn'; 
-    L.drawLocal.draw.toolbar.buttons.polygon = 'Teken een veelhoek'; 
-    L.drawLocal.draw.toolbar.buttons.rectangle = 'Teken een rechthoek'; 
-    L.drawLocal.draw.toolbar.buttons.circle = 'Teken een cirkel'; 
-    L.drawLocal.draw.toolbar.buttons.marker = 'Plaats een marker'; 
-    L.drawLocal.draw.toolbar.buttons.circlemarker = 'Plaats een cirkelmarker'; 
+    L.drawLocal.draw.toolbar.actions.title = 'Annuleer tekenen';
+    L.drawLocal.draw.toolbar.actions.text = 'Annuleren';
+    L.drawLocal.draw.toolbar.finish.title = 'Voltooi tekenen';
+    L.drawLocal.draw.toolbar.finish.text = 'Opslaan';
+    L.drawLocal.draw.toolbar.undo.title = 'Verwijder het laatste punt';
+    L.drawLocal.draw.toolbar.undo.text = 'Laatste punt verwijderen';
+    L.drawLocal.draw.toolbar.buttons.polyline = 'Teken een lijn';
+    L.drawLocal.draw.toolbar.buttons.polygon = 'Teken een veelhoek';
+    L.drawLocal.draw.toolbar.buttons.rectangle = 'Teken een rechthoek';
+    L.drawLocal.draw.toolbar.buttons.circle = 'Teken een cirkel';
+    L.drawLocal.draw.toolbar.buttons.marker = 'Plaats een marker';
+    L.drawLocal.draw.toolbar.buttons.circlemarker = 'Plaats een cirkelmarker';
 
-    
-    L.drawLocal.edit.toolbar.actions.save.title = 'Sla wijzigingen op'; 
-    L.drawLocal.edit.toolbar.actions.save.text = 'Opslaan'; 
-    L.drawLocal.edit.toolbar.actions.cancel.title = 'Annuleer wijzigingen'; 
-    L.drawLocal.edit.toolbar.actions.cancel.text = 'Annuleren'; 
-    L.drawLocal.edit.toolbar.buttons.edit = 'Bewerk de lagen'; 
-    L.drawLocal.edit.toolbar.buttons.remove = 'Verwijder de lagen'; 
+    L.drawLocal.edit.toolbar.actions.save.title = 'Sla wijzigingen op';
+    L.drawLocal.edit.toolbar.actions.save.text = 'Opslaan';
+    L.drawLocal.edit.toolbar.actions.cancel.title = 'Annuleer wijzigingen';
+    L.drawLocal.edit.toolbar.actions.cancel.text = 'Annuleren';
+    L.drawLocal.edit.toolbar.buttons.edit = 'Bewerk de lagen';
+    L.drawLocal.edit.toolbar.buttons.remove = 'Verwijder de lagen';
 
-    L.drawLocal.edit.toolbar.actions.clearAll.text="verwijder alles" 
+    L.drawLocal.edit.toolbar.actions.clearAll.text = "verwijder alles";
   }
-
 
   private initMap(): void {
     this.map = L.map('map').setView([52.3676, 4.9041], 7);
@@ -109,20 +105,36 @@ export class ActivityMapComponent implements OnInit, OnDestroy {
 
   private addMarkers(): void {
     if (!this.activities) return;
-
+  
     this.map.eachLayer((layer) => {
       if (layer instanceof L.Marker) {
         this.map.removeLayer(layer);
       }
     });
-
+  
     this.activities.forEach((activity) => {
-      L.marker([activity.latitude, activity.longitude])
+      const popupContent = `<b>${activity.title}</b><br>${activity.description}<br>
+                            <button id="detailsButton-${activity.id}">Details</button>`;
+  
+      const marker = L.marker([activity.latitude, activity.longitude])
         .addTo(this.map)
-        .bindPopup(
-          `<b>${activity.title}</b><br>${activity.description}<br><button onclick="document.dispatchEvent(new CustomEvent('markerClick', { detail: '${activity.id}' }))">Details</button>`
-        );
+        .bindPopup(popupContent);
+  
+      // Attach the event handler after the popup has opened
+      marker.on('popupopen', () => {
+        // Attach the click event to the details button inside the popup
+        const detailsButton = document.getElementById(`detailsButton-${activity.id}`);
+        if (detailsButton) {
+          detailsButton.addEventListener('click', () => this.handleMarkerClick(activity.id));
+        }
+      });
     });
+  }
+
+  private handleMarkerClick(activityId: string): void {
+    console.log('Marker clicked for activity ID:', activityId);
+    // You can navigate or show a modal here
+    this.router.navigate(['/detailsactivity', activityId]);  // Example, navigate to a details page
   }
 
   private handleDrawnShape(layer: L.Layer): void {
@@ -137,13 +149,13 @@ export class ActivityMapComponent implements OnInit, OnDestroy {
   }
 
   showInfo(): void {
-  alert(
-    'Welkom! Gebruik de kaart om evenementen te bekijken en te filteren:\n' +
-    '- Klik op een knop om een vorm te tekenen en filter evenementen in dat gebied.\n' +
-    '- Typ een locatie in de zoekbalk en druk op Enter of klik op "Zoek naar uw locatie" om de kaart te verplaatsen.\n' +
-    '- Gebruik de filters (Gezien, Nieuw, Ingeschreven) om specifieke evenementen te bekijken.'
-  );
-}
+    alert(
+      'Welkom! Gebruik de kaart om evenementen te bekijken en te filteren:\n' +
+        '- Klik op een knop om een vorm te tekenen en filter evenementen in dat gebied.\n' +
+        '- Typ een locatie in de zoekbalk en druk op Enter of klik op "Zoek naar uw locatie" om de kaart te verplaatsen.\n' +
+        '- Gebruik de filters (Gezien, Nieuw, Ingeschreven) om specifieke evenementen te bekijken.'
+    );
+  }
 
   private filterActivitiesByCircle(center: L.LatLng, radius: number): void {
     if (!this.activities) return;
@@ -163,13 +175,13 @@ export class ActivityMapComponent implements OnInit, OnDestroy {
 
   private filterActivitiesByPolygon(bounds: L.LatLng[]): void {
     if (!this.activities) return;
-  
+
     const polygon = bounds.map((latlng) => [latlng.lat, latlng.lng]);
-  
+
     this.activities = this.activities.filter((activity) =>
       inside([activity.latitude, activity.longitude], polygon)
     );
-  
+
     this.addMarkers();
   }
 
@@ -198,14 +210,14 @@ export class ActivityMapComponent implements OnInit, OnDestroy {
       alert('Please enter a location');
       return;
     }
-  
+
     try {
       const results = await this.provider.search({ query: this.searchQuery });
-  
+
       if (results.length > 0) {
         const { x: lng, y: lat, label } = results[0];
         this.map.setView([lat, lng], 18);
-  
+
         L.marker([lat, lng])
           .addTo(this.map)
           .bindPopup(`<b>${label}</b>`)
@@ -218,10 +230,6 @@ export class ActivityMapComponent implements OnInit, OnDestroy {
       alert('An error occurred while searching for the location.');
     }
   }
-
-  
-
-  
 
   ngOnDestroy(): void {
     this.sub?.unsubscribe();
