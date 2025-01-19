@@ -31,3 +31,9 @@ steps:
       az staticwebapp upload --name "GezelligTijdClient" \
       --resource-group "gezelligtijd_recource" \
       --source dist/GezelligTijdClient 
+
+- task: AzureStaticWebApp@0
+  inputs:
+    app_location: 'dist/GezelligTijdClient' 
+    skip_app_build: true
+    azure_static_web_apps_api_token: $(AzureStaticWebAppApiToken)
