@@ -29,6 +29,7 @@ export class ActivityMapComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.initMap();
+    console.log("evenementen worden opgehaald")
     this.sub = this.activityService.getActivitiesAsync().subscribe({
       next: (activities) => {
         this.activities = activities;

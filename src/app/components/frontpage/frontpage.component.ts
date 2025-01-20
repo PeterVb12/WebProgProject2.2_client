@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { NgbAlertModule, NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -6,7 +7,7 @@ import { NgbAlertModule, NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
   standalone: true,
   templateUrl: './frontpage.component.html',
   styleUrl: './frontpage.component.css',
-  imports: [NgbAlertModule, NgbDropdownModule],
+  imports: [NgbAlertModule, NgbDropdownModule, RouterModule],
 })
 export class FrontpageComponent {
 
