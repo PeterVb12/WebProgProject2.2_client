@@ -20,7 +20,7 @@
 
     <!-- Titel -->
     <div class="title-container d-flex align-items-center justify-content-between mb-4">
-      <h2 style="font-weight: bold; color: #3E7056;">Filter op evenementen</h2>
+      <h2 style="font-weight: bold; color: #3E7056;">Evenementen bij u in de buurt</h2>
       <button
         class="btn btn-info btn-sm rounded-circle shadow"
         (click)="showInfo()"
@@ -30,18 +30,38 @@
       </button>
     </div>
 
-    <!-- Knoppen -->
-    <div class="filter-buttons d-flex flex-column gap-2">
-      <button class="btn btn-light shadow">
-        Gezien
-      </button>
-      <button class="btn btn-light shadow">
-        Nieuw
-      </button>
-      <button class="btn btn-light shadow">
-        Ingeschreven
-      </button>
-    </div>
+<!-- Legenda -->
+<div class="legend-container mb-4">
+  <h3 style="font-weight: bold; color: #3E7056; margin-bottom: 1.5rem;">Legenda</h3>
+  <ul class="list-group">
+    <li class="list-group-item d-flex align-items-center">
+      <img
+        src="../../../../assets/markers/red-marker.png"
+        alt="Nieuw"
+        style="width: 60px; height: 60px; margin-right: 1.5rem;"
+      />
+      <span style="font-size: 1.25rem;">Nieuw: Activiteiten die je nog niet hebt bekeken</span>
+    </li>
+    <li class="list-group-item d-flex align-items-center">
+      <img
+        src="../../../../assets/markers/green-marker.png"
+        alt="Ingeschreven"
+        style="width: 60px; height: 60px; margin-right: 1.5rem;"
+      />
+      <span style="font-size: 1.25rem;">Ingeschreven: Activiteiten waarvoor je bent aangemeld</span>
+    </li>
+    <li class="list-group-item d-flex align-items-center">
+      <img
+        src="../../../../assets/markers/blue-marker.png"
+        alt="Gezien"
+        style="width: 60px; height: 60px; margin-right: 1.5rem;"
+      />
+      <span style="font-size: 1.25rem;">Gezien: Activiteiten die je al hebt bekeken</span>
+    </li>
+  </ul>
+</div>
+
+
 
     <!-- Invoerveld -->
     <div class="search-bar mb-4">

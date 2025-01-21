@@ -6,6 +6,8 @@ import { ActivityDetailsComponent } from './components/activity/activity-details
 import { RegisterComponent } from './components/auth/register/register.component';
 import { LoginComponent } from './components/auth/login/login.component';
 import { ActivityListComponent } from './components/activity/activity-list/activity-list.component';
+import { ActivityTimelineComponent } from './components/activity/activity-timeline/activity-timeline.component';
+
 import { AuthGuard } from './components/auth/guards/auth.guard';
 export const routes: Routes = [
     {path: '', redirectTo: '/frontpage', pathMatch: 'full' },
@@ -16,6 +18,8 @@ export const routes: Routes = [
     {path: 'register', component: RegisterComponent},
     {path: 'detailsactivity', component: ActivityDetailsComponent, canActivate: [AuthGuard]},
     {path: 'login', component: LoginComponent },
+    { path: 'my-activities', component: ActivityListComponent },
+    { path: 'timeline', component: ActivityTimelineComponent },
     {path: 'my-activities', component: ActivityListComponent, canActivate: [AuthGuard] }
 
     

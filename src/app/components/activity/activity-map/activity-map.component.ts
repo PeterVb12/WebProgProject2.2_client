@@ -37,6 +37,7 @@ export class ActivityMapComponent implements OnInit, OnDestroy {
     this.customizeLeafletDrawLabels();
     this.sub = this.activityService.getActivitiesAsync().subscribe({
       next: (activities: Activity[]) => {
+        console.log('Ontvangen activiteiten van backend:', activities);
         this.activities = activities;
         this.addMarkers();
       },
@@ -128,31 +129,51 @@ export class ActivityMapComponent implements OnInit, OnDestroy {
 
   private addMarkers(): void {
     if (!this.activities) return;
-  
+    console.log('Activiteiten:', this.activities);
     // Verwijder bestaande markers
     this.map.eachLayer((layer) => {
       if (layer instanceof L.Marker) {
         this.map.removeLayer(layer);
       }
     });
-  
+
     // Voeg nieuwe markers toe
     this.activities.forEach((activity) => {
-      const popupContent = `<b>${activity.title}</b><br>${activity.description}<br>
-                            <button id="detailsButton-${activity.id}">Details</button>`;
-  
+      const popupContent = `
+        <div style="text-align: center; padding: 10px; font-family: Arial, sans-serif;">
+          <h3 style="margin: 5px 0; color: #a9564d; font-size: 1.2rem;">${activity.title}</h3>
+          <p style="margin: 5px 0; font-size: 0.9rem; color: #555;">${activity.description || "Geen beschrijving beschikbaar"}</p>
+          <button 
+            id="detailsButton-${activity.id}" 
+            style="
+              background-color: #3E7056; 
+              color: white; 
+              border: none; 
+              padding: 10px 20px; 
+              font-size: 0.9rem; 
+              border-radius: 5px; 
+              cursor: pointer; 
+              box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            "
+          >
+            Details
+          </button>
+        </div>
+      `;
+
       // Gebruik de helperfunctie om het juiste icoon te krijgen
-      const iconUrl = this.getMarkerIcon(activity.status); // Kies icon op basis van status
+      const iconUrl = this.getMarkerIcon(activity.status);
+      console.log(`Marker icon for Activity ID ${activity.id}: ${iconUrl}`);
       const markerIcon = L.icon({
         iconUrl: iconUrl,
         iconSize: [25, 41],
         iconAnchor: [12, 41],
       });
-  
+
       const marker = L.marker([activity.latitude, activity.longitude], { icon: markerIcon })
         .addTo(this.map)
         .bindPopup(popupContent);
-  
+
       // Voeg een klikgebeurtenis toe aan de marker
       marker.on('popupopen', () => {
         const detailsButton = document.getElementById(`detailsButton-${activity.id}`);
@@ -162,6 +183,7 @@ export class ActivityMapComponent implements OnInit, OnDestroy {
       });
     });
   }
+
 
   private handleMarkerClick(activityId: string): void {
     console.log('Marker clicked for activity ID:', activityId);
@@ -256,8 +278,11 @@ export class ActivityMapComponent implements OnInit, OnDestroy {
     }
   }
 
-  private getMarkerIcon(status: Status): string {
-    switch (status) {
+  private getMarkerIcon(status: string | Status): string {
+    const statusEnum = typeof status === 'string' ? Status[status as keyof typeof Status] : status;
+    console.log('Geconverteerde status:', statusEnum);
+    
+    switch (statusEnum) {
       case Status.New:
         return '../../../../assets/markers/red-marker.png';
       case Status.SignedUp:
@@ -267,7 +292,6 @@ export class ActivityMapComponent implements OnInit, OnDestroy {
       default:
         return '../../../../assets/markers/red-marker.png';
     }
-  
   }
   
 

@@ -3,8 +3,10 @@ import { ActivatedRoute } from '@angular/router';
 import { ActivityService } from '../activity.service';
 import { Activity } from '../../../models/activity.interface';
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { JwtService } from '../JwtService';
+import { AuthService } from '../../auth/auth.service';
+
 
 @Component({
   selector: 'app-activity-details',
@@ -16,17 +18,13 @@ import { JwtService } from '../JwtService';
 export class ActivityDetailsComponent implements OnInit {
   event: Activity | undefined;
   private readonly participationApi = 'https://localhost:7061/api/Participation';
-  token: string | null = localStorage.getItem('currentuser');
-  successMessage: string = '';  // Success message for participation
-  errorMessage: string = '';    // Error message for participation
-  showSuccessAlert: boolean = false;  // Flag to show green alert
-  showErrorAlert: boolean = false;    // Flag to show red alert
 
   constructor(
     private route: ActivatedRoute,
     private activityService: ActivityService,
     private http: HttpClient,
-    private jwtService: JwtService
+    private jwtService: JwtService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -43,36 +41,36 @@ export class ActivityDetailsComponent implements OnInit {
     }
   }
 
-  participate(eventId: string): void {
-    if (!eventId) {
-      console.error('Event ID not found.');
+  participate(activityId: string): void {
+    const token = this.authService.getTokenFromLocalStorage();
+    if (!token) {
+      console.error('Token not found. Please log in.');
       return;
     }
   
-    console.log('Event data:', this.event); // Log event
-    if (!this.event) {
-      console.error('No event data available.');
+    // Decode the token and extract the user ID
+    const decodedToken = this.jwtService.decodeToken(token);
+    const userId = decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"];
+    if (!userId) {
+      console.error('Invalid token: User ID not found.');
       return;
     }
   
-    this.activityService.participate(eventId).subscribe({
-      next: (response) => {
-        console.log('Response received:', response); // Log the response to inspect the actual content
-        // Check if the response matches the expected success string
-        if (response === 'Successfully registered for the activity.') {  // Correct the expected message if necessary
-          this.successMessage = `U doet mee met ${this.event?.title}`;
-          this.showSuccessAlert = true;
-          setTimeout(() => this.showSuccessAlert = false, 10000);
-        } else {
-          this.errorMessage = 'Er is iets misgegaan bij het aanmelden voor het evenement.';
-          this.showErrorAlert = true;
-          setTimeout(() => this.showErrorAlert = false, 10000);
-        }
+    const url = `${this.participationApi}/${activityId}`;
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    console.log(' Header:', headers);
+  
+    // Prepare the payload
+    const participationData = {
+      userId, // Extracted from the token
+      activityId, // This is passed to the method
+    };
+  
+    this.http.post(url, participationData, { headers }).subscribe({
+      next: () => {
+        console.log('Participation successful!');
       },
       error: (err) => {
-        this.errorMessage = 'Er is iets misgegaan bij het aanmelden voor het evenement.';
-        this.showErrorAlert = true;
-        setTimeout(() => this.showErrorAlert = false, 10000);
         console.error('Error during participation:', err);
         console.error('Response body:', err.error);
       },
