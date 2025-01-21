@@ -83,30 +83,45 @@ export class ActivityDetailsComponent implements OnInit {
   cancelParticipation(activityId: string): void {
     const token = this.authService.getTokenFromLocalStorage();
     if (!token) {
-      console.error('Token not found. Please log in.');
-      return;
+        this.errorMessage = 'Token niet gevonden. Log alstublieft in.';
+        this.showErrorAlert = true;
+        setTimeout(() => (this.showErrorAlert = false), 10000);
+        return;
     }
-  
+
     // Decode the token and extract the user ID
     const decodedToken = this.jwtService.decodeToken(token);
-    const userId = decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"];
+    const userId =
+        decodedToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'];
     if (!userId) {
-      console.error('Invalid token: User ID not found.');
-      return;
+        this.errorMessage = 'Ongeldig token: Gebruikers-ID niet gevonden.';
+        this.showErrorAlert = true;
+        setTimeout(() => (this.showErrorAlert = false), 10000);
+        return;
     }
-  
+
     const url = `${this.participationApi}/${activityId}`;
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    
-    this.http.delete(url, { headers }).subscribe({
-      next: () => {
-        console.log('Successfully canceled participation!');
-      },
-      error: (err) => {
-        console.error('Error during cancellation:', err);
-        console.error('Response body:', err.error);
-      },
+    const headers = new HttpHeaders()
+        .set('Authorization', `Bearer ${token}`)
+        .set('Accept', 'text/plain');
+
+    this.http.delete(url, {
+        headers,
+        observe: 'body',  // Observe the body response
+        responseType: 'text',  // Expect a plain text response
+    }).subscribe({
+        next: (response: any) => {
+            console.log('Successfully canceled participation:', response);
+            this.successMessage = `U bent succesvol afgemeld voor ${this.event?.title}.`;
+            this.showSuccessAlert = true;
+            setTimeout(() => (this.showSuccessAlert = false), 10000);
+        },
+        error: (err) => {
+            console.error('Error during cancellation:', err);
+            this.errorMessage = 'Er is iets misgegaan bij het afmelden voor het evenement.';
+            this.showErrorAlert = true;
+            setTimeout(() => (this.showErrorAlert = false), 10000);
+        },
     });
-  }
-  
+}
 }
