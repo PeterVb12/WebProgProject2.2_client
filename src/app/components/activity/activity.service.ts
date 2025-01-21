@@ -26,7 +26,13 @@ export class ActivityService {
   }
 
   getActivityById(id: string): Observable<Activity> {
-    return this.http.get<Activity>(`${environment.BackendApiUrl}/Activity/${id}`);
+    const token = this.authService.getTokenFromLocalStorage();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http
+      .get<Activity>(`${environment.BackendApiUrl}/Activity/${id}`, { headers })
+      .pipe(
+        tap((activity) => console.log('Opgehaald evenement:', activity))
+      );
   }
 
   createActivity(activity: any): Observable<any> {
@@ -50,6 +56,15 @@ export class ActivityService {
     );
   }
 
+  getParticipatingActivities(): Observable<Activity[]> {
+    const token = this.authService.getTokenFromLocalStorage();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http
+      .get<Activity[]>(`${environment.BackendApiUrl}/Participation`, { headers })
+      .pipe(
+        tap((activities) => console.log('Participating activities:', activities))
+      );
+  }
    httpOptions = {
     headers: new HttpHeaders({
       'Accept': 'text/plain',  // Accepting plain text
