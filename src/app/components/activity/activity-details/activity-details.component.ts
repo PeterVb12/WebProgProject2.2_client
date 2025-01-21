@@ -57,9 +57,8 @@ export class ActivityDetailsComponent implements OnInit {
   
     this.activityService.participate(eventId).subscribe({
       next: (response) => {
-        console.log('Response received:', response); // Log the response to inspect the actual content
-        // Check if the response matches the expected success string
-        if (response === 'Successfully registered for the activity.') {  // Correct the expected message if necessary
+        console.log('Response received:', response);
+        if (response === 'Successfully registered for the activity.') {  
           this.successMessage = `U doet mee met ${this.event?.title}`;
           this.showSuccessAlert = true;
           setTimeout(() => this.showSuccessAlert = false, 10000);
