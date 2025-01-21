@@ -4,8 +4,10 @@ import { ActivityService } from '../activity.service';
 import { Activity } from '../../../models/activity.interface';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { JwtService } from '../JwtService';
 import { AuthService } from '../../auth/auth.service';
+
 
 @Component({
   selector: 'app-activity-details',

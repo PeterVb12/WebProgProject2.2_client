@@ -11,4 +11,11 @@ export interface Activity {
     city: string;
     latitude: number;
     longitude: number;
+    status: Status
   }
+
+export enum Status {
+  New = 0,
+  SignedUp = 1,
+  Viewed = 2,
+}

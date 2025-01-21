@@ -112,3 +112,24 @@
   background-color: #ec971f;
 }
 
+.legend-container ul {
+  padding: 0;
+  list-style: none;
+}
+
+.legend-container li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem; /* Meer ruimte tussen items */
+}
+
+.legend-container img {
+  border-radius: 6px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.legend-container span {
+  font-size: 1.25rem; /* Grotere tekst */
+  color: #333;
+  font-weight: 500;
+}

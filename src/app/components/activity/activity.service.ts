@@ -117,3 +117,5 @@ export class ActivityService {
   
   
 }
+    // console.log("evenement die aangemaakt wordt: " + activity)
+    // return this.http.post(`${environment.BackendApiUrl}/Activity`, activity)

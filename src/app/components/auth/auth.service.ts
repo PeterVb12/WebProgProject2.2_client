@@ -184,4 +184,8 @@ export class AuthService {
       map((user: IUserIdentity | undefined) => (user ? user.id === itemUserId : false))
     );
   }
+
+  isLoggedIn(): boolean {
+    return !!this.currentUser$.value;
+  }
 }
