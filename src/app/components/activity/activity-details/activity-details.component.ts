@@ -76,4 +76,34 @@ export class ActivityDetailsComponent implements OnInit {
       },
     });
   }
+
+  cancelParticipation(activityId: string): void {
+    const token = this.authService.getTokenFromLocalStorage();
+    if (!token) {
+      console.error('Token not found. Please log in.');
+      return;
+    }
+  
+    // Decode the token and extract the user ID
+    const decodedToken = this.jwtService.decodeToken(token);
+    const userId = decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"];
+    if (!userId) {
+      console.error('Invalid token: User ID not found.');
+      return;
+    }
+  
+    const url = `${this.participationApi}/${activityId}`;
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    
+    this.http.delete(url, { headers }).subscribe({
+      next: () => {
+        console.log('Successfully canceled participation!');
+      },
+      error: (err) => {
+        console.error('Error during cancellation:', err);
+        console.error('Response body:', err.error);
+      },
+    });
+  }
+  
 }
