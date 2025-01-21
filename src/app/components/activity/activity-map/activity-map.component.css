@@ -76,3 +76,39 @@
 .filter-buttons button:hover {
   background-color: #e0e0e0;
 }
+
+/* Info Alert Styling */
+.info-alert {
+  background-color: #ffcc00; /* Yellow background */
+  color: #000; /* Black text color */
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  font-size: 1rem;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: opacity 0.5s ease-in-out;
+}
+
+.info-alert.fade-out {
+  opacity: 0;
+}
+
+/* Info Button Styling */
+.info-button {
+  background-color: #f0ad4e;
+  color: white;
+  border: none;
+  font-size: 1.2rem;
+  padding: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.info-button:hover {
+  background-color: #ec971f;
+}
+

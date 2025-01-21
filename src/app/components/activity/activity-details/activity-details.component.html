@@ -1,4 +1,16 @@
 <div class="container-fluid px-5 my-5" *ngIf="event; else loading">
+  <!-- Success alert -->
+  <div *ngIf="showSuccessAlert" class="alert alert-success alert-dismissible fade show" role="alert">
+    <strong>Succes!</strong> {{ successMessage }}
+    <button type="button" class="btn-close" (click)="showSuccessAlert = false"></button>
+  </div>
+
+  <!-- Error alert -->
+  <div *ngIf="showErrorAlert" class="alert alert-danger alert-dismissible fade show" role="alert">
+    <strong>Fout!</strong> {{ errorMessage }}
+    <button type="button" class="btn-close" (click)="showErrorAlert = false"></button>
+  </div>
+
   <div class="row justify-content-center">
     <div class="col-xl-10">
       <div class="card border-0 rounded-4 shadow-lg overflow-hidden">
@@ -35,9 +47,6 @@
                 </div>
                 <div class="detail-item">
                   <strong>Adres en Postcode:</strong> {{ event?.address }}
-                </div>
-                <div class="detail-item">
-                  
                 </div>
               </div>
               <div class="text-center mt-5">
