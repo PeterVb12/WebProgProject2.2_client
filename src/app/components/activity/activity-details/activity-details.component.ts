@@ -3,8 +3,9 @@ import { ActivatedRoute } from '@angular/router';
 import { ActivityService } from '../activity.service';
 import { Activity } from '../../../models/activity.interface';
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { JwtService } from '../JwtService';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
   selector: 'app-activity-details',
@@ -26,7 +27,8 @@ export class ActivityDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private activityService: ActivityService,
     private http: HttpClient,
-    private jwtService: JwtService
+    private jwtService: JwtService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
