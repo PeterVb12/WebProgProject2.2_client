@@ -1,93 +1,124 @@
-<div class="form-group">
-    <label for="email">Email</label>
-    <input
-      type="email"
-      id="email"
-      class="form-control"
-      required
-      [(ngModel)]="user.email"
-      name="email"
-    />
+<div class="container register-container">
+  <div class="row justify-content-center">
+    <div class="col-sm-10 col-md-8 col-lg-6 my-5">
+      <!-- Error message -->
+      <div *ngIf="errorMessage" class="alert alert-danger">
+        {{ errorMessage }}
+      </div>
+
+      <!-- Success message -->
+      <div *ngIf="successMessage" class="alert alert-success">
+        {{ successMessage }}
+      </div>
+
+      <div class="card card-auth shadow-lg p-3 px-md-5 py-md-4">
+        <h2>Registreren</h2>
+        <form (ngSubmit)="onRegister()" #registerForm="ngForm">
+          <!-- Email -->
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              class="form-control"
+              [(ngModel)]="user.email"
+              name="email"
+              required
+            />
+          </div>
+
+          <!-- Password -->
+          <div class="form-group">
+            <label for="password">Wachtwoord</label>
+            <input
+              type="password"
+              id="password"
+              class="form-control"
+              [(ngModel)]="user.password"
+              name="password"
+              (input)="checkPassword()"
+              required
+            />
+            <!-- Password validation feedback -->
+            <div *ngIf="passwordErrors.length > 0" class="text-danger mt-2">
+              <ul>
+                <li *ngFor="let error of passwordErrors">{{ error }}</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Confirm Password -->
+          <div class="form-group">
+            <label for="confirmPassword">Bevestig wachtwoord</label>
+            <input
+              type="password"
+              id="confirmPassword"
+              class="form-control"
+              [(ngModel)]="user.confirmPassword"
+              name="confirmPassword"
+              required
+            />
+          </div>
+
+          <!-- Name -->
+          <div class="form-group">
+            <label for="name">Naam</label>
+            <input
+              type="text"
+              id="name"
+              class="form-control"
+              [(ngModel)]="user.name"
+              name="name"
+              required
+            />
+          </div>
+
+          <!-- Birthdate -->
+          <div class="form-group">
+            <label for="birthdate">Geboortedatum</label>
+            <input
+              type="date"
+              id="birthdate"
+              class="form-control"
+              [(ngModel)]="user.birthdate"
+              name="birthdate"
+              required
+            />
+          </div>
+
+          <!-- Biography -->
+          <div class="form-group">
+            <label for="biography">Biografie</label>
+            <textarea
+              id="biography"
+              class="form-control"
+              [(ngModel)]="user.biography"
+              name="biography"
+            ></textarea>
+          </div>
+
+          <!-- Phone Number -->
+          <div class="form-group">
+            <label for="phoneNumber">Telefoonnummer</label>
+            <input
+              type="tel"
+              id="phoneNumber"
+              class="form-control"
+              [(ngModel)]="user.phoneNumber"
+              name="phoneNumber"
+            />
+          </div>
+
+          <!-- Submit Button -->
+          <button
+            type="submit"
+            class="btn btn-primary btn-block"
+            [disabled]="isLoading || registerForm.invalid"
+          >
+            Registreer
+          </button>
+        </form>
+      </div>
+    </div>
   </div>
-  
-  <div class="form-group">
-    <label for="password">Wachtwoord</label>
-    <input
-      type="password"
-      id="password"
-      class="form-control"
-      required
-      [(ngModel)]="user.password"
-      name="password"
-    />
-  </div>
-  
-  <div class="form-group">
-    <label for="confirmPassword">Bevestig wachtwoord</label>
-    <input
-      type="password"
-      id="confirmPassword"
-      class="form-control"
-      required
-      [(ngModel)]="user.confirmPassword"
-      name="confirmPassword"
-    />
-  </div>
-  
-  <div class="form-group">
-    <label for="name">Naam</label>
-    <input
-      type="text"
-      id="name"
-      class="form-control"
-      required
-      [(ngModel)]="user.name"
-      name="name"
-    />
-  </div>
-  
-  <div class="form-group">
-    <label for="birthdate">Geboortedatum</label>
-    <input
-      type="date"
-      id="birthdate"
-      class="form-control"
-      required
-      [(ngModel)]="user.birthdate"
-      name="birthdate"
-    />
-  </div>
-  
-  <div class="form-group">
-    <label for="biography">Biografie</label>
-    <textarea
-      id="biography"
-      class="form-control"
-      required
-      [(ngModel)]="user.biography"
-      name="biography"
-    ></textarea>
-  </div>
-  
-  <div class="form-group">
-    <label for="phoneNumber">Telefoon nummer</label>
-    <input
-      type="tel"
-      id="phoneNumber"
-      class="form-control"
-      required
-      [(ngModel)]="user.phoneNumber"
-      name="phoneNumber"
-    />
-  </div>
-  
-  <div class="form-group text-center">
-    <button
-      class="btn btn-primary"
-      [disabled]="isLoading"
-      (click)="onRegister()"
-    >
-      registreer
-    </button>
-  </div>
-  
+</div>

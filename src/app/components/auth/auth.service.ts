@@ -46,12 +46,13 @@ export class AuthService {
         { headers: this.headers }
       )
       .pipe(
+        // Hier verwerken we de succesvolle login (als we een token ontvangen)
         map((response) => {
           const token = response.token;
           console.log('Token ontvangen:', token); // Debuglog
           this.saveTokenToLocalStorage(token);
   
-          // Decode token to extract userId
+          // Decode token om userId te extraheren
           const decodedToken: any = jwtDecode(token);
           console.log('Decoded token payload:', decodedToken); // Debuglog
           const userId =
@@ -66,23 +67,25 @@ export class AuthService {
           return userId;
         }),
         switchMap((userId) =>
-          // Fetch user data from the backend using userId
+          // Haal de gebruikersgegevens op van de backend met behulp van userId
           this.http.get<IUserIdentity>(`${environment.BackendApiUrl}/User/${userId}`).pipe(
             map((user) => {
               console.log('User ontvangen van backend:', user); // Debuglog
-              this.currentUser$.next(user); // Store user as currentUser
-              this.saveUserToLocalStorage(user); // Save the user in localStorage
+              this.currentUser$.next(user); // Sla de user op als currentUser
+              this.saveUserToLocalStorage(user); // Sla de user op in localStorage
               console.log('currentUser$ updated:', this.currentUser$.value); // Debuglog
               return user;
             })
           )
         ),
+        // Catch errors and handle them (if login fails, we return undefined)
         catchError((error: any) => {
           console.error('Login failed. Full error object:', error);
-          return of(undefined);
+          return of(undefined); // Stop de verdere keten als er een fout is
         })
       );
   }
+  
   
   
   
