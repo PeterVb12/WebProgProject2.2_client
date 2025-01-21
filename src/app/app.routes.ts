@@ -6,18 +6,17 @@ import { ActivityDetailsComponent } from './components/activity/activity-details
 import { RegisterComponent } from './components/auth/register/register.component';
 import { LoginComponent } from './components/auth/login/login.component';
 import { ActivityListComponent } from './components/activity/activity-list/activity-list.component';
-
+import { AuthGuard } from './components/auth/guards/auth.guard';
 export const routes: Routes = [
-    { path: '', redirectTo: '/frontpage', pathMatch: 'full' },
+    {path: '', redirectTo: '/frontpage', pathMatch: 'full' },
     {path: 'frontpage', component: FrontpageComponent },
-    {path: 'activity', component: ActivityMapComponent },
-    {path: 'createactivity', component: ActivityCreateComponent},
-    {path: 'detailsactivity/:id', component: ActivityDetailsComponent},
+    {path: 'activity', component: ActivityMapComponent, canActivate: [AuthGuard] },
+    {path: 'createactivity', component: ActivityCreateComponent, canActivate: [AuthGuard]},
+    {path: 'detailsactivity/:id', component: ActivityDetailsComponent, canActivate: [AuthGuard]},
     {path: 'register', component: RegisterComponent},
-    {path: 'detailsactivity', component: ActivityDetailsComponent},
-    {path: 'register', component: RegisterComponent},
+    {path: 'detailsactivity', component: ActivityDetailsComponent, canActivate: [AuthGuard]},
     {path: 'login', component: LoginComponent },
-    { path: 'my-activities', component: ActivityListComponent }
+    {path: 'my-activities', component: ActivityListComponent, canActivate: [AuthGuard] }
 
     
 

@@ -5,7 +5,7 @@ import 'leaflet-draw';
 import 'leaflet-geometryutil';
 import { OpenStreetMapProvider } from 'leaflet-geosearch';
 import { ActivityService } from '../activity.service';
-import { Activity } from '../../../models/activity.interface';
+import { Activity, Status } from '../../../models/activity.interface';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
@@ -129,23 +129,32 @@ export class ActivityMapComponent implements OnInit, OnDestroy {
   private addMarkers(): void {
     if (!this.activities) return;
   
+    // Verwijder bestaande markers
     this.map.eachLayer((layer) => {
       if (layer instanceof L.Marker) {
         this.map.removeLayer(layer);
       }
     });
   
+    // Voeg nieuwe markers toe
     this.activities.forEach((activity) => {
       const popupContent = `<b>${activity.title}</b><br>${activity.description}<br>
                             <button id="detailsButton-${activity.id}">Details</button>`;
   
-      const marker = L.marker([activity.latitude, activity.longitude])
+      // Gebruik de helperfunctie om het juiste icoon te krijgen
+      const iconUrl = this.getMarkerIcon(activity.status); // Kies icon op basis van status
+      const markerIcon = L.icon({
+        iconUrl: iconUrl,
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+      });
+  
+      const marker = L.marker([activity.latitude, activity.longitude], { icon: markerIcon })
         .addTo(this.map)
         .bindPopup(popupContent);
   
-      // Attach the event handler after the popup has opened
+      // Voeg een klikgebeurtenis toe aan de marker
       marker.on('popupopen', () => {
-        // Attach the click event to the details button inside the popup
         const detailsButton = document.getElementById(`detailsButton-${activity.id}`);
         if (detailsButton) {
           detailsButton.addEventListener('click', () => this.handleMarkerClick(activity.id));
@@ -247,10 +256,19 @@ export class ActivityMapComponent implements OnInit, OnDestroy {
     }
   }
 
-
-
-  // Existing code...
-
+  private getMarkerIcon(status: Status): string {
+    switch (status) {
+      case Status.New:
+        return '../../../../assets/markers/red-marker.png';
+      case Status.SignedUp:
+        return '../../../../assets/markers/green-marker.png';
+      case Status.Viewed:
+        return '../../../../assets/markers/blue-marker.png';
+      default:
+        return '../../../../assets/markers/red-marker.png';
+    }
+  
+  }
   
 
   ngOnDestroy(): void {
