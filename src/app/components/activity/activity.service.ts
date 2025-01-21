@@ -26,7 +26,13 @@ export class ActivityService {
   }
 
   getActivityById(id: string): Observable<Activity> {
-    return this.http.get<Activity>(`${environment.BackendApiUrl}/Activity/${id}`);
+    const token = this.authService.getTokenFromLocalStorage();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http
+      .get<Activity>(`${environment.BackendApiUrl}/Activity/${id}`, { headers })
+      .pipe(
+        tap((activity) => console.log('Opgehaald evenement:', activity))
+      );
   }
 
   createActivity(activity: any): Observable<any> {

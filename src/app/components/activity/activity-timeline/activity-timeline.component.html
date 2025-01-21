@@ -1,11 +1,13 @@
-<div class="timeline">
-    <div *ngFor="let activity of activities" class="timeline-item">
-      <div class="timeline-icon"></div>
-      <div class="timeline-content">
-        <h3>{{ activity.title }}</h3>
-        <p>{{ activity.description }}</p>
-        <span class="timeline-date">{{ activity.date | date: 'd MMMM yyyy' }}</span>
-      </div>
+<div class="timeline" [ngStyle]="{'--timeline-line-width': timelineWidth + 'px'}">
+  <div 
+  *ngFor="let activity of activities" 
+  class="timeline-item" 
+  (click)="onMarkerClick(activity.id)">
+    <div class="timeline-icon"></div>
+    <div class="timeline-content">
+      <h3>{{ activity.title }}</h3>
+      <p>{{ activity.description }}</p>
+      <span class="timeline-date">{{ activity.date | date: 'd MMMM yyyy' }}</span>
     </div>
   </div>
-  
+</div>

@@ -1,24 +1,35 @@
+/* Basisstijl voor de timeline */
 .timeline {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: flex-start;
-    overflow-x: scroll;
-    padding: 20px;
-    gap: 40px;
-    position: relative;
-  }
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  overflow-x: scroll;
+  padding: 5% 2%; /* Flexibele padding */
+  gap: 5vw; /* Flexibele gap gebaseerd op viewport breedte */
+  position: relative;
+}
+
+
+.timeline-item:first-child {
+  margin-left: 10px; /* Extra marge voor de eerste card */
+}
+
+.timeline::before {
+  width: var(--timeline-line-width, 100%); /* Standaard breedte wordt overschreven */
+}
+
   
-  .timeline::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background-color: #4caf50;  /* De kleur van de lijn */
-    transform: translateY(-50%);
-  }
+ .timeline::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  height: 2px;
+  background-color: #4caf50;
+  transform: translateY(-50%);
+}
+
   
   .timeline-item {
     display: flex;
@@ -36,6 +47,11 @@
     transition: transform 0.3s ease-in-out;
   }
   
+  .timeline-item:hover {
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+  }
+
   .timeline-item:nth-child(odd) {
     margin-top: 300px;  /* Items met een oneven index staan boven de lijn */
   }
