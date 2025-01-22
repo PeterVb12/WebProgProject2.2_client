@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import * as L from 'leaflet';
+import L from 'leaflet';
 import 'leaflet-draw';
 import 'leaflet-geometryutil';
 import { OpenStreetMapProvider } from 'leaflet-geosearch';
