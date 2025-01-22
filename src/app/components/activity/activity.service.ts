@@ -56,6 +56,10 @@ export class ActivityService {
     );
   }
 
+  getUsersByActivity(activityId: string): Observable<any[]> {
+    return this.http.get<any[]>(`${environment.BackendApiUrl}/Participation/${activityId}/users`);
+  }
+
   getParticipatingActivities(): Observable<Activity[]> {
     const token = this.authService.getTokenFromLocalStorage();
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);

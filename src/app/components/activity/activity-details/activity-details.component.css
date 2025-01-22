@@ -49,11 +49,12 @@ body {
   }
   
   .detail-item strong {
-    color: #0062e6;
+    color: #a9564d;
   }
   
   h1 {
     font-size: 2.5rem;
+    color: #a9564d;
   }
   
   p {
@@ -70,6 +71,15 @@ body {
     padding: 10px 20px;
     border-radius: 8px;
   }
+
+  .text-primary {
+    color: #a9564d;
+  }
+
+  h1, h3 {
+    color: #a9564d;
+  }
+  
   
   .btn-primary {
     background-color: #0062e6;

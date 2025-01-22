@@ -17,6 +17,7 @@ import { AuthService } from '../../auth/auth.service';
 })
 export class ActivityDetailsComponent implements OnInit {
   event: Activity | undefined;
+  participants: any[] = [];
   private readonly participationApi = 'https://localhost:7061/api/Participation';
   token: string | null = localStorage.getItem('currentuser');
   successMessage: string = '';  // Success message for participation
@@ -38,12 +39,24 @@ export class ActivityDetailsComponent implements OnInit {
       this.activityService.getActivityById(activityId).subscribe({
         next: (activity) => {
           this.event = activity;
+          this.loadParticipants(activity.id);
         },
         error: (err) => {
           console.error('Error fetching activity details:', err);
         },
       });
     }
+  }
+
+  loadParticipants(activityId: string): void {
+    this.activityService.getUsersByActivity(activityId).subscribe({
+      next: (participants) => {
+        this.participants = participants;
+      },
+      error: (err) => {
+        console.error('Error fetching participants:', err);
+      },
+    });
   }
 
   participate(eventId: string): void {
