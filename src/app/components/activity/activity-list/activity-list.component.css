@@ -63,6 +63,10 @@
   
   .solution_card .so_top_icon {
   }
+
+  .solution_card:hover {
+    cursor: pointer;
+  }
   
   .solution_card .solu_title h3 {
     color: #212121;

@@ -4,7 +4,8 @@
         <div class="solution_cards_box activity-list">
           <h1>Evenementen waar ik aan mee doe</h1>
           <div *ngIf="activities.length > 0; else noActivities" class="activity-cards">
-            <div *ngFor="let activity of activities" class="solution_card" (click)="toggleDetails(activity)">
+            <div *ngFor="let activity of activities" class="solution_card" 
+                (click)="onMarkerClick(activity.id)">
               <div class="card-body">
                 <h2>{{ activity.title }}</h2>
                 <p class="date">{{ activity?.date | date: 'fullDate' }}</p>
@@ -12,22 +13,12 @@
                 <p><strong>Adres:</strong> {{ activity.address }}, {{ activity.city }}</p>
               </div>
             </div>
+
+            </div>
           </div>
           <ng-template #noActivities>
             <p>U doet nog niet mee aan activiteiten.</p>
           </ng-template>
-  
-          <!-- Activity Details Section -->
-          <div *ngIf="selectedActivity" class="activity-details">
-            <h2>{{ selectedActivity.title }} - Details</h2>
-            <p><strong>Datum:</strong> {{ selectedActivity?.date | date: 'fullDate' }}</p>
-            <p><strong>Geregisteerd op:</strong> {{ selectedActivity.registeredAt | date: 'short' }}</p>
-            <p><strong>Adres:</strong> {{ selectedActivity.address }}, {{ selectedActivity.city }}</p>
-            <p><strong>Beschrijving:</strong> {{ selectedActivity.description }}</p>
-            <button (click)="exitDetails()">Verlaten</button>
-          </div>
         </div>
       </div>
-    </div>
   </section>
-  
