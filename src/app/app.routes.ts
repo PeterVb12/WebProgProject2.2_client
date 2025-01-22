@@ -7,8 +7,10 @@ import { RegisterComponent } from './components/auth/register/register.component
 import { LoginComponent } from './components/auth/login/login.component';
 import { ActivityListComponent } from './components/activity/activity-list/activity-list.component';
 import { ActivityTimelineComponent } from './components/activity/activity-timeline/activity-timeline.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 import { AuthGuard } from './components/auth/guards/auth.guard';
+import { AboutComponent } from './components/aboutuspage/aboutuspage.component';
 export const routes: Routes = [
     {path: '', redirectTo: '/frontpage', pathMatch: 'full' },
     {path: 'frontpage', component: FrontpageComponent },
@@ -20,7 +22,9 @@ export const routes: Routes = [
     {path: 'login', component: LoginComponent },
     { path: 'my-activities', component: ActivityListComponent },
     { path: 'timeline', component: ActivityTimelineComponent },
-    {path: 'my-activities', component: ActivityListComponent, canActivate: [AuthGuard] }
+    {path: 'my-activities', component: ActivityListComponent, canActivate: [AuthGuard] },
+    { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
+    {path: 'aboutus', component: AboutComponent}
 
     
 

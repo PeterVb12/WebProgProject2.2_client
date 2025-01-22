@@ -1,0 +1,45 @@
+<div class="profile-container">
+    <h1>Profiel</h1>
+    <div *ngIf="user; else noUser">
+      <p>
+        <i class="fas fa-user"></i>
+        <strong>Naam:</strong> {{ user.name }}
+      </p>
+      <p>
+        <i class="fas fa-envelope"></i>
+        <strong>E-mail:</strong> {{ user.emailAddress }}
+      </p>
+      <p>
+        <i class="fas fa-phone"></i>
+        <strong>Telefoonnummer:</strong> {{ user.phoneNumber }}
+      </p>
+      <p>
+        <i class="fas fa-birthday-cake"></i>
+        <strong>Geboortedatum:</strong> {{ user.birthdate }}
+      </p>
+      <p>
+        <i class="fas fa-calendar-alt"></i>
+        <strong>Leeftijd:</strong> {{ user.age }}
+      </p>
+      <p>
+        <i class="fas fa-info-circle"></i>
+        <strong>Biografie:</strong> {{ user.biography }}
+      </p>
+      <p>
+        <i class="fas fa-heart"></i>
+        <strong>Hobby's:</strong>
+        <span *ngIf="user.hobbys.length > 0; else noHobbys">
+          {{ user.hobbys.join(', ') }}
+        </span>
+      </p>
+    </div>
+  
+    <ng-template #noUser>
+      <p>Geen gebruiker gevonden. Log alstublieft in.</p>
+    </ng-template>
+  
+    <ng-template #noHobbys>
+      Geen hobby's opgegeven.
+    </ng-template>
+  </div>
+  
