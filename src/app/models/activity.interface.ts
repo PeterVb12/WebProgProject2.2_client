@@ -7,6 +7,7 @@ export interface Activity {
     maxParticipants: number;
     cost?: number; 
     OrganizerId?: string; 
+    organizerName?: string;
     address: string;
     city: string;
     latitude: number;

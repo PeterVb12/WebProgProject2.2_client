@@ -1,3 +1,7 @@
+<div *ngIf="activities.length === 0" class="no-activities-message">
+  <p>Je hebt je nog niet ingeschreven voor een activiteit.</p>
+</div>
+
 <div class="timeline" [ngStyle]="{'--timeline-line-width': timelineWidth + 'px'}">
   <div 
   *ngFor="let activity of activities" 

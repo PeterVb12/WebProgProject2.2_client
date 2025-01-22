@@ -141,4 +141,12 @@
     bottom: 100%;               /* Zorgt ervoor dat de lijn naar de tijdlijn gaat vanaf de onderste card */
     height: 200%;              /* Zorgt ervoor dat de lijn naar de bovenkant van de tijdlijn gaat */
   }
+
+  .no-activities-message {
+    text-align: center;
+    font-size: 16px;
+    color: #888;
+    padding: 20px;
+  }
+  
   
