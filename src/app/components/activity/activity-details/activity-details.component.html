@@ -10,40 +10,50 @@
   <div class="row justify-content-center">
     <div class="col-xl-10">
       <div class="card border-0 rounded-4 shadow-lg overflow-hidden">
-        <div class="card-body p-0">
-          <div class="row g-0">
-            <div class="col-sm-6 d-none d-sm-block bg-image" [style.backgroundImage]="'url(../../../../assets/PB_Bingo-Night_Web.jpg)'">
-              <div class="profile-picture-container">
-                <img src="assets/blank-profile-picture-973460_1280.png" alt="Organizer Profile" class="profile-picture"/>
-              </div>
-            </div>
-            <div class="col-sm-6 p-5">
-              <div class="text-center mb-4">
-                <h1 class="fw-bold">{{ event?.title }}</h1>
-              </div>
+        <!-- Detail Banner -->
+        <div class="detail-banner" style="background-image: url('../../../../assets/detail_banner.jpg'); height: 250px; background-size: cover; background-position: center;"></div>
 
-              <div class="details-section">
-                <div class="detail-item"><strong>Naam:</strong> {{ event?.title }}</div>
-                <div class="detail-item"><strong>Beschrijving:</strong> {{ event?.description }}</div>
-                <div class="detail-item"><strong>Mogelijke Kosten:</strong> €{{ event?.cost }}</div>
-                <div class="detail-item"><strong>Adres en Postcode:</strong> {{ event?.address }}</div>
-                <div class="detail-item"><strong>Organisator:</strong> {{ event?.organizerName }}</div>
-              </div>
-              
-              <div class="participants-section mt-5">
-                <h3 class="fw-bold">Deelnemers:</h3>
-                <ul>
-                  <li *ngFor="let participant of participants">
-                    {{ participant.name }} ({{ participant.emailAddress }})
-                  </li>
-                </ul>
-              </div>
+        <div class="card-body p-5">
+          <!-- Titel -->
+          <div class="text-center mb-4">
+            <h1 class="fw-bold" style="color: #3E7056;">{{ event?.title }}</h1>
+          </div>
 
-              <div class="text-center mt-5">
-                <button class="btn btn-primary btn-lg px-4 py-2 fw-bold" (click)="participate(event.id)">Meedoen!</button>
-                <button class="btn btn-danger btn-lg px-4 py-2 fw-bold ms-3" (click)="cancelParticipation(event.id)">Afmelden</button>
-              </div>
-            </div>
+          <!-- Details -->
+          <div class="details-section mb-5">
+            <h3 class="fw-bold mb-3" style="color: #3E7056; ">Details</h3>
+            <div class="detail-item"><strong>Naam:</strong> {{ event?.title }}</div>
+            <div class="detail-item"><strong>Beschrijving:</strong> {{ event?.description }}</div>
+            <div class="detail-item"><strong>Mogelijke Kosten:</strong> €{{ event?.cost }}</div>
+            <div class="detail-item"><strong>Adres en Postcode:</strong> {{ event?.address }}</div>
+            <div class="detail-item"><strong>Organisator:</strong> {{ event?.organizerName }}</div>
+          </div>
+
+          <!-- Scheiding -->
+          <hr class="my-4" />
+
+          <!-- Deelnemers -->
+          <div class="participants-section">
+            <h3 class="fw-bold mb-3" style="color: #3E7056; ">Deelnemers</h3>
+            <ul>
+              <li *ngFor="let participant of participants">
+                {{ participant.name }} ({{ participant.emailAddress }})
+              </li>
+            </ul>
+          </div>
+
+          <!-- Knoppen -->
+          <div class="text-center mt-5">
+            <button
+              class="btn btn-primary btn-lg px-4 py-2 fw-bold"
+              (click)="participate(event.id)"
+              style="background-color: #3E7056; "
+            >
+              Meedoen!
+            </button>
+            <button class="btn btn-danger btn-lg px-4 py-2 fw-bold ms-3" (click)="cancelParticipation(event.id)">
+              Afmelden
+            </button>
           </div>
         </div>
       </div>
