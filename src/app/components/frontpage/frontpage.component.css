@@ -37,3 +37,20 @@
 .hover-image-container:hover .hover-image {
     opacity: 1; 
 }
+
+.rating {
+    
+    gap: 5px; /* Ruimte tussen de sterren */
+    align-items: center;
+    font-size: 20px;
+    /* Pas dit aan voor grotere of kleinere sterren */
+  }
+  
+  .star {
+    color: #FFD700; /* Gouden kleur voor actieve sterren */
+  }
+  
+  .star:nth-child(n+5) {
+    color: #d3d3d3; /* Grijze kleur voor inactieve sterren */
+  }
+  

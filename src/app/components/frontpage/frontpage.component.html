@@ -9,11 +9,15 @@
         
         <div class="hero-content position-absolute" 
              style="bottom: 100px; left: 40px;">
-          <a href="#aanmelden" 
-             class="btn btn-lg" 
-             style="background-color: #3E7056; color: white; margin-right: 10px;">
-            Aanmelden
-          </a>
+             <div *ngIf="!(loggedInUser$ | async); else loggedIn" class="banner-buttons">
+              <a routerLink="/register" 
+                 class="btn btn-lg" 
+                 style="background-color: #3E7056; color: white; position: relative; left: 150px; top: 48px;">
+                Aanmelden
+              </a>
+            </div>
+            <ng-template #loggedIn>
+             </ng-template>
           <a routerLink="/aboutus" 
              class="btn btn-light btn-lg ml-3">
             Over ons
@@ -31,9 +35,13 @@
                     style="width: 140px; height: 140px; object-fit: cover; align-items: center;">
                   <h2 class="fw-normal">Petra Bakker</h2>
                   <p>Een echte aanrader!</p>
-                  <p><a class="btn btn-secondary" 
-                        href="#"
-                        style="background-color: #3E7056; color: white;">bekijk profiel »</a></p>
+                  <p class="rating">
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                  </p>
                 </div><!-- /.col-lg-4 -->
                 <div class="col-lg-4">
                     <img 
@@ -44,9 +52,13 @@
                   <h2 class="fw-normal">Dirk Kort</h2>
                   <p>Veel nieuwe vrienden leren kennen.
                   </p>
-                  <p><a class="btn btn-secondary" 
-                    href="#"
-                    style="background-color: #3E7056; color: white;">bekijk profiel »</a></p>
+                  <p class="rating">
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                    <span class="star">☆</span>
+                  </p>
                 </div><!-- /.col-lg-4 -->
                 <div class="col-lg-4">
                     <img 
@@ -57,9 +69,13 @@
                   <h2 class="fw-normal">Jolanda de Jong</h2>
                   <p>altijd een gezellige avond via deze app.
                   </p>
-                  <p><a class="btn btn-secondary" 
-                    href="#"
-                    style="background-color: #3E7056; color: white;">bekijk profiel »</a></p>
+                  <p class="rating" style="align-content: center; position: relative;">
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                  </p>
                 </div>    
               </div>
               <hr class="featurette-divider">
