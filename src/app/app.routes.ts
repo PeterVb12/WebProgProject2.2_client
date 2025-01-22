@@ -10,6 +10,7 @@ import { ActivityTimelineComponent } from './components/activity/activity-timeli
 import { ProfileComponent } from './components/profile/profile.component';
 
 import { AuthGuard } from './components/auth/guards/auth.guard';
+import { AboutComponent } from './components/aboutuspage/aboutuspage.component';
 export const routes: Routes = [
     {path: '', redirectTo: '/frontpage', pathMatch: 'full' },
     {path: 'frontpage', component: FrontpageComponent },
@@ -23,6 +24,7 @@ export const routes: Routes = [
     { path: 'timeline', component: ActivityTimelineComponent },
     {path: 'my-activities', component: ActivityListComponent, canActivate: [AuthGuard] },
     { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
+    {path: 'aboutus', component: AboutComponent}
 
     
 
