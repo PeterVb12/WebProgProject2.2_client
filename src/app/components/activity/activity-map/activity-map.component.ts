@@ -262,25 +262,22 @@ export class ActivityMapComponent implements OnInit, OnDestroy {
       alert('Please enter a location');
       return;
     }
-
+  
     try {
       const results = await this.provider.search({ query: this.searchQuery });
-
+  
       if (results.length > 0) {
         const { x: lng, y: lat, label } = results[0];
-        this.map.setView([lat, lng], 18);
-
-        L.marker([lat, lng])
-          .addTo(this.map)
-          .bindPopup(`<b>${label}</b>`)
-          .openPopup();
+        this.map.setView([lat, lng], 18);  // Verplaats de kaart naar de gevonden locatie
+        // Verwijder de regel hieronder om geen marker toe te voegen:
+        // L.marker([lat, lng]).addTo(this.map).bindPopup(`<b>${label}</b>`).openPopup();
       } else {
         alert('Location not found');
       }
     } catch (error) {
       console.error('Error searching for location:', error);
       alert('An error occurred while searching for the location.');
-    }
+    }  
   }
 
   private getMarkerIcon(status: string | Status): string {
