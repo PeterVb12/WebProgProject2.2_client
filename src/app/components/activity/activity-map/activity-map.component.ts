@@ -118,6 +118,11 @@ export class ActivityMapComponent implements OnInit, OnDestroy {
         remove: true,
       },
     });
+
+    this.map.on(L.Draw.Event.DELETED, () => {
+      this.resetActivities(); // Reset de activiteiten na het verwijderen van een figuur
+    });
+    
     this.map.addControl(drawControl);
 
     this.map.on(L.Draw.Event.CREATED, (event: any) => {
@@ -293,6 +298,21 @@ export class ActivityMapComponent implements OnInit, OnDestroy {
         return '../../../../assets/markers/red-marker.png';
     }
   }
+
+  private resetActivities(): void {
+    // Herhaal de activiteiten ophalen van de backend
+    this.activityService.getActivitiesAsync().subscribe({
+      next: (activities: Activity[]) => {
+        console.log('Activiteiten opnieuw geladen:', activities);
+        this.activities = activities;
+        this.addMarkers(); // Voeg de markers opnieuw toe
+      },
+      error: (err) => {
+        console.error('Error fetching activities:', err);
+      },
+    });
+  }
+  
   
 
   ngOnDestroy(): void {
