@@ -137,7 +137,6 @@
     object-fit: contain;
   }
   
-  /*start media query*/
   @media screen and (min-width: 320px) {
     .sol_card_top_3 {
       position: relative;
@@ -171,12 +170,12 @@
 
   .solution_cards_box {
     display: flex;
-    flex-wrap: wrap;  /* Ensures wrapping of cards into multiple rows */
-    gap: 16px;  /* Optional: Adds spacing between the cards */
+    flex-wrap: wrap; 
+    gap: 16px;  
   }
 
   .solution_card {
-    flex: 1 1 48%;  /* This ensures the cards take up 48% of the container width, leaving some space between them */
+    flex: 1 1 48%;  
     background: #fff;
     box-shadow: 0 2px 4px 0 rgba(136, 144, 195, 0.2),
       0 5px 15px 0 rgba#a9564d;

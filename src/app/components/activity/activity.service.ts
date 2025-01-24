@@ -71,11 +71,11 @@ export class ActivityService {
   }
    httpOptions = {
     headers: new HttpHeaders({
-      'Accept': 'text/plain',  // Accepting plain text
-      'Content-Type': 'text/plain; charset=utf-8'  // Content-type is plain text
+      'Accept': 'text/plain',  
+      'Content-Type': 'text/plain; charset=utf-8'  
     }),
-    responseType: 'text' as const,  // Set responseType to 'text'
-    observe: 'body'  // Ensure you are observing the body of the response
+    responseType: 'text' as const,  
+    observe: 'body'  
   };
 
   participate(activityId: string): Observable<any> {
@@ -95,15 +95,15 @@ export class ActivityService {
       switchMap(({ activityId, token }) =>
         this.http.post(
           `${environment.BackendApiUrl}/Participation/${activityId}`,
-          null,  // No body required
+          null,  
           {
             headers: new HttpHeaders({
               'Authorization': `Bearer ${token}`,
-              'Accept': 'text/plain',  // We expect plain text
-              'Content-Type': 'application/json',  // This can stay as application/json for consistency
+              'Accept': 'text/plain',  
+              'Content-Type': 'application/json', 
             }),
-            observe: 'body',  // We observe the body response
-            responseType: 'text'  // Explicitly set the response type to text
+            observe: 'body',  
+            responseType: 'text'  
           }
         )
       ),
@@ -115,11 +115,4 @@ export class ActivityService {
     );
   }
   
-  
-  
-  
-  
-  
 }
-    // console.log("evenement die aangemaakt wordt: " + activity)
-    // return this.http.post(`${environment.BackendApiUrl}/Activity`, activity)

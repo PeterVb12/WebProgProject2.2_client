@@ -21,7 +21,7 @@ interface ParticipatingActivity {
   standalone: true,
   imports: [CommonModule, RouterLink],
   providers: [
-      { provide: LOCALE_ID, useValue: 'nl' }  // Zet de locale naar Nederlands
+      { provide: LOCALE_ID, useValue: 'nl' }  
     ],
 })
 export class ActivityListComponent implements OnInit {
@@ -45,14 +45,13 @@ export class ActivityListComponent implements OnInit {
     this.router.navigate(['detailsactivity', activityId]);
   }
 
-  selectedActivity: any = null;  // Holds the activity details
+  selectedActivity: any = null; 
 
   toggleDetails(activity: any) {
-    // Toggle the visibility of activity details when clicked
     if (this.selectedActivity === activity) {
-      this.selectedActivity = null;  // Deselect if clicked again
+      this.selectedActivity = null;  
     } else {
-      this.selectedActivity = activity;  // Select activity to show details
+      this.selectedActivity = activity;  
     }
   }
 
@@ -71,7 +70,6 @@ export class ActivityListComponent implements OnInit {
   }
 
   exitDetails() {
-    // Close the details view
     this.selectedActivity = null;
   }
 }

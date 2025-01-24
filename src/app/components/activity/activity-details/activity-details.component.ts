@@ -20,10 +20,10 @@ export class ActivityDetailsComponent implements OnInit {
   participants: any[] = [];
   private readonly participationApi = 'https://localhost:7061/api/Participation';
   token: string | null = localStorage.getItem('currentuser');
-  successMessage: string = '';  // Success message for participation
-  errorMessage: string = '';    // Error message for participation
-  showSuccessAlert: boolean = false;  // Flag to show green alert
-  showErrorAlert: boolean = false;    // Flag to show red alert
+  successMessage: string = '';  
+  errorMessage: string = '';    
+  showSuccessAlert: boolean = false;  
+  showErrorAlert: boolean = false;    
 
   constructor(
     private route: ActivatedRoute,
@@ -65,7 +65,7 @@ export class ActivityDetailsComponent implements OnInit {
       return;
     }
   
-    console.log('Event data:', this.event); // Log event
+    console.log('Event data:', this.event); 
     if (!this.event) {
       console.error('No event data available.');
       return;
@@ -103,7 +103,6 @@ export class ActivityDetailsComponent implements OnInit {
         return;
     }
 
-    // Decode the token and extract the user ID
     const decodedToken = this.jwtService.decodeToken(token);
     const userId =
         decodedToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'];
@@ -121,8 +120,8 @@ export class ActivityDetailsComponent implements OnInit {
 
     this.http.delete(url, {
         headers,
-        observe: 'body',  // Observe the body response
-        responseType: 'text',  // Expect a plain text response
+        observe: 'body',  
+        responseType: 'text',  
     }).subscribe({
         next: (response: any) => {
             console.log('Successfully canceled participation:', response);

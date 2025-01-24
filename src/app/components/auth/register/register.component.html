@@ -1,12 +1,10 @@
 <div class="container register-container">
   <div class="row justify-content-center">
     <div class="col-sm-10 col-md-8 col-lg-6 my-5">
-      <!-- Error message -->
       <div *ngIf="errorMessage" class="alert alert-danger">
         {{ errorMessage }}
       </div>
 
-      <!-- Success message -->
       <div *ngIf="successMessage" class="alert alert-success">
         {{ successMessage }}
       </div>
@@ -14,7 +12,6 @@
       <div class="card card-auth shadow-lg p-3 px-md-5 py-md-4">
         <h2>Registreren</h2>
         <form (ngSubmit)="onRegister()" #registerForm="ngForm">
-          <!-- Email -->
           <div class="form-group">
             <label for="email">Email</label>
             <input
@@ -27,7 +24,6 @@
             />
           </div>
 
-          <!-- Password -->
           <div class="form-group">
             <label for="password">Wachtwoord</label>
             <input
@@ -39,7 +35,6 @@
               (input)="checkPassword()"
               required
             />
-            <!-- Password validation feedback -->
             <div *ngIf="passwordErrors.length > 0" class="text-danger mt-2">
               <ul>
                 <li *ngFor="let error of passwordErrors">{{ error }}</li>
@@ -47,7 +42,6 @@
             </div>
           </div>
 
-          <!-- Confirm Password -->
           <div class="form-group">
             <label for="confirmPassword">Bevestig wachtwoord</label>
             <input
@@ -60,7 +54,6 @@
             />
           </div>
 
-          <!-- Name -->
           <div class="form-group">
             <label for="name">Naam</label>
             <input
@@ -73,7 +66,6 @@
             />
           </div>
 
-          <!-- Birthdate -->
           <div class="form-group">
             <label for="birthdate">Geboortedatum</label>
             <input
@@ -86,7 +78,6 @@
             />
           </div>
 
-          <!-- Biography -->
           <div class="form-group">
             <label for="biography">Biografie</label>
             <textarea
@@ -97,7 +88,6 @@
             ></textarea>
           </div>
 
-          <!-- Phone Number -->
           <div class="form-group">
             <label for="phoneNumber">Telefoonnummer</label>
             <input
@@ -109,7 +99,6 @@
             />
           </div>
 
-          <!-- Submit Button -->
           <button
             type="submit"
             class="btn btn-primary btn-block"

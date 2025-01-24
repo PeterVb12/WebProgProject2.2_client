@@ -19,6 +19,6 @@ export class FrontpageComponent {
   constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
-    this.loggedInUser$ = this.authService.currentUser$; // Observe de ingelogde gebruiker
+    this.loggedInUser$ = this.authService.currentUser$;
   }
 }

@@ -1,67 +1,32 @@
 <div class="map-page-container d-flex" style="height: 100vh;">
   <!-- Kaartgedeelte -->
   <div class="map-container w-66 p-3" style="flex: 2; box-sizing: border-box;">
-    <div
-      id="map"
-      class="map"
-      style="width: 100%; height: 100%; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);"
-    ></div>
+    <div id="map" class="map" style="width: 100%; height: 100%; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);"></div>
   </div>
-
+  
   <!-- Filter en invoerveld gedeelte -->
-  <div
-    class="filter-container w-33 p-3 d-flex flex-column justify-content-start"
-    style="flex: 1; box-sizing: border-box;"
-  >
-    <!-- Info Bar -->
-    <div *ngIf="showInfoAlert" class="info-alert">
-      {{ infoMessage }}
-    </div>
-
+  <div class="filter-container w-33 p-3 d-flex flex-column justify-content-start" style="flex: 1; box-sizing: border-box;">
     <!-- Titel -->
-    <div class="title-container d-flex align-items-center justify-content-between mb-4">
-      <h2 style="font-weight: bold; color: #3E7056;">Evenementen bij u in de buurt</h2>
-      <button
-        class="btn btn-info btn-sm rounded-circle shadow"
-        (click)="showInfo()"
-        style="width: 2rem; height: 2rem; display: flex; align-items: center; justify-content: center; background-color: #a9564d; border-color: #a9564d;"
+
+    <h2 class="text-center mb-4" style="font-weight: bold; color: #3E7056;">Filter op evenementen</h2>
+    <!-- Knoppen -->
+    <div class="filter-buttons d-flex flex-column gap-2">
+      <button class="btn btn-light shadow" 
       >
-        i
+      <!-- (click)="filterEvents('gezien')" -->
+        Gezien
+      </button>
+      <button class="btn btn-light shadow" 
+      >
+      <!-- (click)="filterEvents('nieuw')" -->
+        Nieuw
+      </button>
+      <button class="btn btn-light shadow" 
+      >
+      <!-- (click)="filterEvents('ingeschreven')" -->
+        Ingeschreven
       </button>
     </div>
-
-<!-- Legenda -->
-<div class="legend-container mb-4">
-  <h3 style="font-weight: bold; color: #3E7056; margin-bottom: 1.5rem;">Legenda</h3>
-  <ul class="list-group">
-    <li class="list-group-item d-flex align-items-center">
-      <img
-        src="../../../../assets/markers/red-marker.png"
-        alt="Nieuw"
-        style="width: 60px; height: 60px; margin-right: 1.5rem;"
-      />
-      <span style="font-size: 1.25rem;">Nieuw: Activiteiten die je nog niet hebt bekeken</span>
-    </li>
-    <li class="list-group-item d-flex align-items-center">
-      <img
-        src="../../../../assets/markers/green-marker.png"
-        alt="Ingeschreven"
-        style="width: 60px; height: 60px; margin-right: 1.5rem;"
-      />
-      <span style="font-size: 1.25rem;">Ingeschreven: Activiteiten waarvoor je bent aangemeld</span>
-    </li>
-    <li class="list-group-item d-flex align-items-center">
-      <img
-        src="../../../../assets/markers/blue-marker.png"
-        alt="Gezien"
-        style="width: 60px; height: 60px; margin-right: 1.5rem;"
-      />
-      <span style="font-size: 1.25rem;">Gezien: Activiteiten die je al hebt bekeken</span>
-    </li>
-  </ul>
-</div>
-
-
 
     <!-- Invoerveld -->
     <div class="search-bar mb-4">
@@ -82,4 +47,6 @@
       </button>
     </div>
   </div>
+
+
 </div>

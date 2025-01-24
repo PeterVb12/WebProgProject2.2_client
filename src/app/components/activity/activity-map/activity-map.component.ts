@@ -52,21 +52,17 @@ export class ActivityMapComponent implements OnInit, OnDestroy {
   showInfoAlert = false;
   infoMessage = '';
 
-  // Existing code...
-
   showInfo(): void {
-    this.infoMessage = `Welkom! Gebruik de kaart om evenementen te bekijken en te filteren:
-    - Klik op een knop om een vorm te tekenen en filter evenementen in dat gebied.
+    this.infoMessage = `Welkom! Gebruik de kaart om evenementen te bekijken:
+    - Klik op een knop om een vorm te tekenen
     - Typ een locatie in de zoekbalk en druk op Enter of klik op "Zoek naar uw locatie" om de kaart te verplaatsen.
-    - Gebruik de filters (Gezien, Nieuw, Ingeschreven) om specifieke evenementen te bekijken.`;
+    - Gebruik de legenda (Gezien, Nieuw, Ingeschreven) om specifieke evenementen te bekijken.`;
     
-    // Show the info alert bar
     this.showInfoAlert = true;
 
-    // Optionally hide the info bar after 10 seconds
     setTimeout(() => {
       this.showInfoAlert = false;
-    }, 100000); // 10 seconds
+    }, 100000); 
   }
 
   private customizeLeafletDrawLabels(): void {
@@ -120,7 +116,7 @@ export class ActivityMapComponent implements OnInit, OnDestroy {
     });
 
     this.map.on(L.Draw.Event.DELETED, () => {
-      this.resetActivities(); // Reset de activiteiten na het verwijderen van een figuur
+      this.resetActivities(); 
     });
     
     this.map.addControl(drawControl);
@@ -166,7 +162,7 @@ export class ActivityMapComponent implements OnInit, OnDestroy {
         </div>
       `;
 
-      // Gebruik de helperfunctie om het juiste icoon te krijgen
+
       const iconUrl = this.getMarkerIcon(activity.status);
       console.log(`Marker icon for Activity ID ${activity.id}: ${iconUrl}`);
       const markerIcon = L.icon({
@@ -179,7 +175,6 @@ export class ActivityMapComponent implements OnInit, OnDestroy {
         .addTo(this.map)
         .bindPopup(popupContent);
 
-      // Voeg een klikgebeurtenis toe aan de marker
       marker.on('popupopen', () => {
         const detailsButton = document.getElementById(`detailsButton-${activity.id}`);
         if (detailsButton) {
@@ -192,8 +187,7 @@ export class ActivityMapComponent implements OnInit, OnDestroy {
 
   private handleMarkerClick(activityId: string): void {
     console.log('Marker clicked for activity ID:', activityId);
-    // You can navigate or show a modal here
-    this.router.navigate(['/detailsactivity', activityId]);  // Example, navigate to a details page
+    this.router.navigate(['/detailsactivity', activityId]);  
   }
 
   private handleDrawnShape(layer: L.Layer): void {
@@ -268,9 +262,7 @@ export class ActivityMapComponent implements OnInit, OnDestroy {
   
       if (results.length > 0) {
         const { x: lng, y: lat, label } = results[0];
-        this.map.setView([lat, lng], 18);  // Verplaats de kaart naar de gevonden locatie
-        // Verwijder de regel hieronder om geen marker toe te voegen:
-        // L.marker([lat, lng]).addTo(this.map).bindPopup(`<b>${label}</b>`).openPopup();
+        this.map.setView([lat, lng], 18);  
       } else {
         alert('Location not found');
       }
@@ -297,12 +289,11 @@ export class ActivityMapComponent implements OnInit, OnDestroy {
   }
 
   private resetActivities(): void {
-    // Herhaal de activiteiten ophalen van de backend
     this.activityService.getActivitiesAsync().subscribe({
       next: (activities: Activity[]) => {
         console.log('Activiteiten opnieuw geladen:', activities);
         this.activities = activities;
-        this.addMarkers(); // Voeg de markers opnieuw toe
+        this.addMarkers(); 
       },
       error: (err) => {
         console.error('Error fetching activities:', err);

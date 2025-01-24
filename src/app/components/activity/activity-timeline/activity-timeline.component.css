@@ -1,22 +1,21 @@
-/* Basisstijl voor de timeline */
 .timeline {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   align-items: flex-start;
   overflow-x: scroll;
-  padding: 5% 2%; /* Flexibele padding */
-  gap: 5vw; /* Flexibele gap gebaseerd op viewport breedte */
+  padding: 5% 2%;
+  gap: 5vw; 
   position: relative;
 }
 
 
 .timeline-item:first-child {
-  margin-left: 10px; /* Extra marge voor de eerste card */
+  margin-left: 10px; 
 }
 
 .timeline::before {
-  width: var(--timeline-line-width, 100%); /* Standaard breedte wordt overschreven */
+  width: var(--timeline-line-width, 100%); 
 }
 
   
@@ -38,8 +37,8 @@
     position: relative;
     padding: 10px;
     flex-shrink: 0;
-    width: 250px; /* Vaste breedte voor elke card */
-    height: 200px; /* Vaste hoogte voor elke card */
+    width: 250px; 
+    height: 200px; 
     background-color: #f4f4f4;
     border-radius: 8px;
     border: 1px solid #ddd;
@@ -53,11 +52,11 @@
   }
 
   .timeline-item:nth-child(odd) {
-    margin-top: 300px;  /* Items met een oneven index staan boven de lijn */
+    margin-top: 300px;  
   }
   
   .timeline-item:nth-child(even) {
-    margin-bottom: 300px;  /* Items met een even index staan onder de lijn */
+    margin-bottom: 300px;  
   }
   
   .timeline-icon {
@@ -119,27 +118,27 @@
     background-color: #555;
   }
 
-  /* Lijn van het bolletje naar de tijdlijn */
+
   .timeline-icon::after {
     content: '';
     position: absolute;
-    left: 50%;                  /* Plaatst de lijn in het midden van het bolletje */
-    width: 2px;                 /* De breedte van de lijn */
-    background-color: #4caf50;  /* De kleur van de lijn */
-    z-index: -1;                /* Zorgt ervoor dat de lijn onder de bol komt */
-    transform: translateX(-50%); /* Zorgt ervoor dat de lijn gecentreerd is boven het bolletje */
+    left: 50%;                  
+    width: 2px;                 
+    background-color: #4caf50;  
+    z-index: -1;                
+    transform: translateX(-50%); 
   }
   
-  /* Voor de bovenste cards (oneven items) */
+ 
   .timeline-item:nth-child(even) .timeline-icon::after {
-    top: 100%;                  /* Zorgt ervoor dat de lijn naar de tijdlijn gaat vanaf de bovenste card */
-    height: 200%;               /* Zorgt ervoor dat de lijn naar de tijdlijn reikt */
+    top: 100%;                  
+    height: 200%;               
   }
   
-  /* Voor de onderste cards (even items) */
+
   .timeline-item:nth-child(odd) .timeline-icon::after {
-    bottom: 100%;               /* Zorgt ervoor dat de lijn naar de tijdlijn gaat vanaf de onderste card */
-    height: 200%;              /* Zorgt ervoor dat de lijn naar de bovenkant van de tijdlijn gaat */
+    bottom: 100%;               
+    height: 200%;             
   }
 
   .no-activities-message {

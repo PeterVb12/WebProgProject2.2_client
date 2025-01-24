@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [FormsModule, CommonModule],
   templateUrl: './activity-create.component.html',
-  styleUrls: ['./activity-create.component.css'], // Corrected 'styleUrl' to 'styleUrls'
+  styleUrls: ['./activity-create.component.css'], 
 })
 export class ActivityCreateComponent {
   activity: any = {
@@ -65,7 +65,7 @@ export class ActivityCreateComponent {
       return false;
     }
 
-    this.errorMessage = null; // Clear previous error if validation passes
+    this.errorMessage = null; 
     return true;
   }
 

@@ -115,7 +115,6 @@ export class RegisterComponent {
       return;
     }
 
-    // Controleer wachtwoordvalidatie
     this.checkPassword();
     if (this.passwordErrors.length > 0) {
       this.errorMessage = 'Het wachtwoord voldoet niet aan de vereisten.';
@@ -137,13 +136,12 @@ export class RegisterComponent {
       next: (registeredUser) => {
         console.log('Registratie succesvol:', registeredUser);
 
-        // Redirect to homepage after successful registration
         this.authService.login(this.user.email, this.user.password).subscribe({
           next: (loggedInUser) => {
             console.log('Inloggen succesvol:', loggedInUser);
             this.successMessage = 'Registratie en inloggen voltooid!';
             this.isLoading = false;
-            window.location.href = '/'; // Redirect to homepage
+            window.location.href = '/'; 
           },
           error: (err) => {
             console.error('Inloggen mislukt:', err);

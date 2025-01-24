@@ -46,15 +46,13 @@ export class AuthService {
         { headers: this.headers }
       )
       .pipe(
-        // Hier verwerken we de succesvolle login (als we een token ontvangen)
         map((response) => {
           const token = response.token;
-          console.log('Token ontvangen:', token); // Debuglog
+          console.log('Token ontvangen:', token); 
           this.saveTokenToLocalStorage(token);
   
-          // Decode token om userId te extraheren
           const decodedToken: any = jwtDecode(token);
-          console.log('Decoded token payload:', decodedToken); // Debuglog
+          console.log('Decoded token payload:', decodedToken); 
           const userId =
             decodedToken[
               'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'
@@ -62,26 +60,24 @@ export class AuthService {
           if (!userId) {
             throw new Error('UserId is missing in the token payload.');
           }
-          console.log('Decoded userId:', userId); // Debuglog
+          console.log('Decoded userId:', userId); 
   
           return userId;
         }),
         switchMap((userId) =>
-          // Haal de gebruikersgegevens op van de backend met behulp van userId
           this.http.get<IUserIdentity>(`${environment.BackendApiUrl}/User/${userId}`).pipe(
             map((user) => {
-              console.log('User ontvangen van backend:', user); // Debuglog
-              this.currentUser$.next(user); // Sla de user op als currentUser
-              this.saveUserToLocalStorage(user); // Sla de user op in localStorage
-              console.log('currentUser$ updated:', this.currentUser$.value); // Debuglog
+              console.log('User ontvangen van backend:', user);
+              this.currentUser$.next(user); 
+              this.saveUserToLocalStorage(user); 
+              console.log('currentUser$ updated:', this.currentUser$.value); 
               return user;
             })
           )
         ),
-        // Catch errors and handle them (if login fails, we return undefined)
         catchError((error: any) => {
           console.error('Login failed. Full error object:', error);
-          return of(undefined); // Stop de verdere keten als er een fout is
+          return of(undefined); 
         })
       );
   }
@@ -103,9 +99,9 @@ export class AuthService {
         map((user) => {
           console.log('Payload:', userData);
           console.log('User registered successfully:', user);
-          const token = user.token; // Save only the token
-          this.saveTokenToLocalStorage(token!); // Save the token to local storage
-          this.currentUser$.next(user); // Update current user
+          const token = user.token; 
+          this.saveTokenToLocalStorage(token!);
+          this.currentUser$.next(user); 
           return user;
         }),
         catchError((error: any) => {
@@ -155,9 +151,8 @@ export class AuthService {
   }
 
   getUserFromLocalStorage(): Observable<IUserIdentity | undefined> {
-    const token = localStorage.getItem(this.CURRENT_USER); // Get only the token
+    const token = localStorage.getItem(this.CURRENT_USER); 
     if (token) {
-      // Optional: Create a user object with just the token
       const user: IUserIdentity = { token } as IUserIdentity;
       return of(user);
     }
@@ -166,7 +161,7 @@ export class AuthService {
 
   private saveTokenToLocalStorage(token: string): void {
     console.log('Token opgeslagen:', token);
-    localStorage.setItem("tokenLocalStorage", token); // Save only the token
+    localStorage.setItem("tokenLocalStorage", token); 
   }
 
   getTokenFromLocalStorage(): string | null {
@@ -174,7 +169,6 @@ export class AuthService {
   }
 
   private saveUserToLocalStorage(user: IUserIdentity): void {
-    // Sla de volledige gebruiker op in localStorage in plaats van alleen de token
     localStorage.setItem(this.CURRENT_USER, JSON.stringify(user));
   }
   
